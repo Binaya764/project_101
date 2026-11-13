@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { RouterProvider, Routes, Route } from './router/Router';
 import Navbar from './components/Navbar';
 import FairyLights from './components/FairyLights';
 import FloatingParticles from './components/FloatingParticles';
-import Hero from './components/Hero';
-import DiyaWall from './components/DiyaWall';
-import Statistics from './components/Statistics';
-import GamesSection from './components/GamesSection';
-import RangoliStudio from './components/RangoliStudio';
-import ChhathSection from './components/ChhathSection';
-import DeusiBhailoStudio from './components/DeusiBhailoStudio';
-import KukurTiharTribute from './components/KukurTiharTribute';
-import AboutTihar from './components/AboutTihar';
 import Footer from './components/Footer';
 import DiyaModal from './components/DiyaModal';
 import DiyaDetailModal from './components/DiyaDetailModal';
+
+// Multi-Page Route Components
+import HomePage from './pages/HomePage';
+import WallPage from './pages/WallPage';
+import GamesPage from './pages/GamesPage';
+import CallBreakPage from './pages/CallBreakPage';
+import DhumbalPage from './pages/DhumbalPage';
+import MarriagePage from './pages/MarriagePage';
+import RangoliPage from './pages/RangoliPage';
+import ChhathPage from './pages/ChhathPage';
+import DeusiPage from './pages/DeusiPage';
+import KukurTributePage from './pages/KukurTributePage';
+import AboutTiharPage from './pages/AboutTiharPage';
+import StatsPage from './pages/StatsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 import {
   getStoredDiyas,
@@ -25,7 +32,7 @@ import {
 } from './utils/storage';
 import { soundManager } from './utils/audio';
 
-export default function App() {
+function AppContent() {
   const [diyos, setDiyos] = useState([]);
   const [totalCount, setTotalCount] = useState(12480);
   const [isLightModalOpen, setIsLightModalOpen] = useState(false);
@@ -68,7 +75,7 @@ export default function App() {
     setNewlyAddedId(newDiya.id);
     setIsLightModalOpen(false);
 
-    // Smoothly scroll to wall
+    // Scroll to wall if on /wall
     setTimeout(() => {
       const wallEl = document.querySelector('#diyo-wall');
       if (wallEl) {
@@ -76,7 +83,6 @@ export default function App() {
       }
     }, 200);
 
-    // Clear newly added highlight after 6 seconds
     setTimeout(() => {
       setNewlyAddedId(null);
     }, 6000);
@@ -96,13 +102,6 @@ export default function App() {
     });
   };
 
-  const handleExploreWall = () => {
-    const wallEl = document.querySelector('#diyo-wall');
-    if (wallEl) {
-      wallEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="jhilimili-app-root">
       {/* Background Animated Floating Golden Dust Particles */}
@@ -111,51 +110,73 @@ export default function App() {
       {/* Hanging Golden Fairy Lights across page top */}
       <FairyLights />
 
-      {/* Elegant Glassmorphism Navigation Bar */}
+      {/* Glassmorphism Navigation Bar with Distinct Page Links */}
       <Navbar
         onOpenLightModal={() => setIsLightModalOpen(true)}
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
       />
 
+      {/* Multi-Page Route Viewports */}
       <main className="main-content-flow">
-        {/* Hero Section */}
-        <Hero
-          totalDiyosCount={totalCount}
-          onOpenLightModal={() => setIsLightModalOpen(true)}
-          onExploreWall={handleExploreWall}
-        />
+        <Routes>
+          {/* Home Page (Overview & Gateway) */}
+          <Route
+            path="/"
+            element={
+              <HomePage
+                totalCount={totalCount}
+                onOpenLightModal={() => setIsLightModalOpen(true)}
+                diyos={diyos}
+                onSelectDiya={(diya) => setSelectedDiya(diya)}
+              />
+            }
+          />
 
-        {/* The Virtual Diyo Wall */}
-        <DiyaWall
-          diyos={diyos}
-          onOpenLightModal={() => setIsLightModalOpen(true)}
-          onSelectDiya={(diya) => setSelectedDiya(diya)}
-          onLikeDiya={handleLikeDiya}
-          likedDiyaIds={likedDiyaIds}
-          newlyAddedId={newlyAddedId}
-        />
+          {/* Virtual Diyo Wall Page */}
+          <Route
+            path="/wall"
+            element={
+              <WallPage
+                diyos={diyos}
+                onOpenLightModal={() => setIsLightModalOpen(true)}
+                onSelectDiya={(diya) => setSelectedDiya(diya)}
+                onLikeDiya={handleLikeDiya}
+                likedDiyaIds={likedDiyaIds}
+                newlyAddedId={newlyAddedId}
+              />
+            }
+          />
 
-        {/* Traditional Nepali Card Games: Call Break, Dhumbal, Marriage */}
-        <GamesSection />
+          {/* Games Lounge Page */}
+          <Route path="/games" element={<GamesPage />} />
 
-        {/* Interactive Rangoli & Mandala Studio */}
-        <RangoliStudio />
+          {/* Dedicated Individual Game Pages */}
+          <Route path="/games/callbreak" element={<CallBreakPage />} />
+          <Route path="/games/dhumbal" element={<DhumbalPage />} />
+          <Route path="/games/marriage" element={<MarriagePage />} />
 
-        {/* Chhath Puja Mahaparva: 4 Days, Ghat Locator & Virtual Arghya */}
-        <ChhathSection />
+          {/* Interactive Rangoli Studio Page */}
+          <Route path="/rangoli" element={<RangoliPage />} />
 
-        {/* Deusi-Bhailo Rhythm Pad Jam & Rhyme Generator */}
-        <DeusiBhailoStudio />
+          {/* Chhath Puja Mahaparva & Ghats Page */}
+          <Route path="/chhath" element={<ChhathPage />} />
 
-        {/* Kukur Tihar Loyal Companion Tribute & Pet Hall of Fame */}
-        <KukurTiharTribute />
+          {/* Deusi-Bhailo Rhythm Jam Page */}
+          <Route path="/deusi-jam" element={<DeusiPage />} />
 
-        {/* Celebration Statistics Section */}
-        <Statistics totalDiyosCount={totalCount} />
+          {/* Kukur Tihar Loyal Companion Tribute Page */}
+          <Route path="/kukur-tribute" element={<KukurTributePage />} />
 
-        {/* About Tihar & The Five Days of Yamapanchak */}
-        <AboutTihar />
+          {/* About Yamapanchak Editorial Page */}
+          <Route path="/about-tihar" element={<AboutTiharPage />} />
+
+          {/* Celebration Statistics Page */}
+          <Route path="/stats" element={<StatsPage totalCount={totalCount} />} />
+
+          {/* 404 Fallback Route */}
+          <Route element={<NotFoundPage />} />
+        </Routes>
       </main>
 
       {/* Cultural Footer */}
@@ -179,5 +200,13 @@ export default function App() {
         />
       )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <RouterProvider>
+      <AppContent />
+    </RouterProvider>
   );
 }

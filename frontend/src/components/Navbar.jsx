@@ -1,43 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useRouter } from '../router/Router';
 import { soundManager } from '../utils/audio';
 
 export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currentPath } = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home', nepali: 'गृह' },
-    { name: 'Diyo Wall', href: '#diyo-wall', nepali: 'दियो भित्तो' },
-    { name: 'Card Games', href: '#games', nepali: 'तास खेल' },
-    { name: 'Rangoli Studio', href: '#rangoli-studio', nepali: 'रङ्गोली' },
-    { name: 'Chhath Parva', href: '#chhath-section', nepali: 'छठ महापर्व' },
-    { name: 'Deusi Jam', href: '#deusi-studio', nepali: 'देउसी-भैलो' },
-    { name: 'Kukur Tribute', href: '#kukur-tribute', nepali: 'कुकुर पूजा' },
-    { name: 'About Tihar', href: '#about-tihar', nepali: 'यमपञ्चक' }
+    { name: 'Home', path: '/', nepali: 'गृह' },
+    { name: 'Diyo Wall', path: '/wall', nepali: 'दियो भित्तो' },
+    { name: 'Card Games', path: '/games', nepali: 'तास खेल' },
+    { name: 'Rangoli Studio', path: '/rangoli', nepali: 'रङ्गोली' },
+    { name: 'Chhath Parva', path: '/chhath', nepali: 'छठ महापर्व' },
+    { name: 'Deusi Jam', path: '/deusi-jam', nepali: 'देउसी-भैलो' },
+    { name: 'Kukur Tribute', path: '/kukur-tribute', nepali: 'कुकुर पूजा' },
+    { name: 'About Tihar', path: '/about-tihar', nepali: 'यमपञ्चक' }
   ];
-
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <header className={`site-navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         {/* Brand Logo */}
-        <a href="#home" className="navbar-brand" onClick={(e) => handleNavClick(e, '#home')}>
+        <Link to="/" className="navbar-brand">
           <div className="brand-logo-icon">
             <span className="logo-flame">🪔</span>
             <div className="logo-sparkle" />
@@ -51,20 +44,20 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             </div>
             <span className="brand-nepali">झिलिमिली • तिहार र छठ महापर्व</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Main Navigation">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
+            <Link
+              key={link.path}
+              to={link.path}
               className="nav-item-link"
-              onClick={(e) => handleNavClick(e, link.href)}
+              onClick={() => soundManager.playCardPlay()}
             >
               <span className="link-title">{link.name}</span>
               <span className="link-sub-nepali">{link.nepali}</span>
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -128,15 +121,15 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
 
             <nav className="mobile-nav-list">
               {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
+                <Link
+                  key={link.path}
+                  to={link.path}
                   className="mobile-nav-link"
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="link-title">{link.name}</span>
                   <span className="link-sub-nepali">{link.nepali}</span>
-                </a>
+                </Link>
               ))}
             </nav>
 

@@ -1,14 +1,10 @@
 import React from 'react';
+import { Link } from '../router/Router';
 
 export default function Footer({ onOpenLightModal }) {
-  const scrollTo = (id) => {
-    const el = document.querySelector(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <footer className="site-footer">
-      {/* Decorative Border */}
+      {/* Decorative Top Garland */}
       <div className="footer-top-garland" aria-hidden="true">
         <div className="wood-carving-strip" />
       </div>
@@ -20,7 +16,7 @@ export default function Footer({ onOpenLightModal }) {
             <span className="footer-flame">🪔</span>
             <div>
               <h3 className="footer-title">JHILIMILI</h3>
-              <span className="footer-subtitle">झिलिमिली • तिहार महोत्सव</span>
+              <span className="footer-subtitle">झिलिमिली • तिहार र छठ महापर्व</span>
             </div>
           </div>
           <p className="footer-mission-text">
@@ -33,13 +29,17 @@ export default function Footer({ onOpenLightModal }) {
 
         {/* Quick Nav Links */}
         <div className="footer-nav-column">
-          <h4 className="footer-col-heading">Navigation</h4>
+          <h4 className="footer-col-heading">Pages & Exploration</h4>
           <ul className="footer-links-list">
-            <li><button type="button" onClick={() => scrollTo('#home')}>Home (गृह)</button></li>
-            <li><button type="button" onClick={() => scrollTo('#diyo-wall')}>Virtual Diyo Wall</button></li>
-            <li><button type="button" onClick={() => scrollTo('#games')}>Games of Tihar</button></li>
-            <li><button type="button" onClick={() => scrollTo('#about-tihar')}>About Yamapanchak</button></li>
-            <li><button type="button" onClick={() => scrollTo('#stats')}>Celebration Pulse</button></li>
+            <li><Link to="/">Home (गृह)</Link></li>
+            <li><Link to="/wall">Virtual Diyo Wall</Link></li>
+            <li><Link to="/games">Games of Tihar</Link></li>
+            <li><Link to="/rangoli">Rangoli Studio</Link></li>
+            <li><Link to="/chhath">Chhath Parva & Ghats</Link></li>
+            <li><Link to="/deusi-jam">Deusi-Bhailo Jam</Link></li>
+            <li><Link to="/kukur-tribute">Kukur Tribute</Link></li>
+            <li><Link to="/about-tihar">About Yamapanchak</Link></li>
+            <li><Link to="/stats">Celebration Pulse</Link></li>
           </ul>
         </div>
 
@@ -58,8 +58,8 @@ export default function Footer({ onOpenLightModal }) {
           </button>
 
           <div className="footer-social-links">
-            <span className="social-pill" title="Community Share">🌐 Global Diaspora</span>
-            <span className="social-pill" title="Nepali Heritage">🇳🇵 Nepal</span>
+            <span className="social-pill" title="KUCC 2026">KUCC Web UI 2026</span>
+            <span className="social-pill" title="Nepali Heritage">🇳🇵 Nepal & Diaspora</span>
             <span className="social-pill" title="Festival of Lights">✨ Deepawali 2083</span>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function Footer({ onOpenLightModal }) {
       <div className="footer-bottom-bar">
         <div className="footer-bottom-container">
           <p className="footer-credit">
-            Made with ❤️ for the spirit of Tihar.
+            Made with ❤️ for the spirit of Tihar & Chhath • KUCC Advanced Track.
           </p>
           <p className="footer-copyright">
             © {new Date().getFullYear()} JHILIMILI Platform. All blessings, stories, and cultural traditions warmly celebrated.

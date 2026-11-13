@@ -4426,3 +4426,346 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ==========================================================================
+   Multi-Page Layout, Breadcrumbs & Gateway Styles
+   ========================================================================== */
+.page-breadcrumb-banner {
+  background: rgba(27, 16, 34, 0.7);
+  border-bottom: 1px solid var(--border-gold);
+  padding: 12px 24px;
+  backdrop-filter: blur(8px);
+}
+
+.breadcrumb-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.breadcrumb-link {
+  color: var(--warm-amber);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--diya-gold);
+}
+
+.breadcrumb-nav .sep {
+  opacity: 0.4;
+  color: var(--cream);
+}
+
+.breadcrumb-nav .current {
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.banner-badge-pill {
+  font-size: 12px;
+  color: var(--diya-gold);
+  background: rgba(255, 211, 106, 0.1);
+  padding: 4px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 211, 106, 0.2);
+}
+
+.btn-exit-game {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  color: var(--cream);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-exit-game:hover {
+  background: rgba(255, 211, 106, 0.15);
+  border-color: var(--diya-gold);
+}
+
+.dedicated-game-wrapper {
+  max-width: 1040px;
+  margin: 24px auto 60px;
+  padding: 0 16px;
+}
+
+.nav-item-link.is-active,
+.mobile-nav-link.is-active {
+  color: var(--diya-gold) !important;
+  background: rgba(255, 211, 106, 0.14) !important;
+  border-color: var(--diya-gold) !important;
+}
+
+/* Portal Gateway Section on Home Page */
+.portal-gateway-section {
+  max-width: 1320px;
+  margin: 0 auto 60px;
+  padding: 40px 24px;
+}
+
+.portal-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.portal-card-link {
+  background: rgba(27, 16, 34, 0.85);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 22px;
+  padding: 24px;
+  text-decoration: none;
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.portal-card-link:hover {
+  transform: translateY(-6px);
+  border-color: var(--diya-gold);
+  box-shadow: 0 16px 40px rgba(245, 158, 11, 0.25);
+  background: rgba(36, 20, 48, 0.9);
+}
+
+.portal-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.portal-icon {
+  font-size: 34px;
+}
+
+.portal-badge {
+  font-size: 11px;
+  background: rgba(255, 211, 106, 0.15);
+  border: 1px solid var(--diya-gold);
+  color: var(--diya-gold);
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-weight: 700;
+}
+
+.portal-card-titles {
+  margin-bottom: 8px;
+}
+
+.portal-title {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--cream);
+}
+
+.portal-nepali {
+  font-size: 13px;
+  color: var(--warm-amber);
+}
+
+.portal-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.portal-action-row {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 211, 106, 0.12);
+}
+
+.action-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--diya-gold);
+}
+
+/* Featured Wishes Strip */
+.featured-wishes-strip {
+  border-top: 1px solid var(--border-gold);
+  border-bottom: 1px solid var(--border-gold);
+  background: rgba(16, 13, 24, 0.65);
+  padding: 50px 24px;
+  margin-bottom: 60px;
+}
+
+.strip-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.strip-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.strip-icon {
+  font-size: 32px;
+}
+
+.strip-header h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--diya-gold);
+}
+
+.strip-header p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.btn-view-all-wall {
+  margin-left: auto;
+  background: rgba(255, 211, 106, 0.12);
+  border: 1px solid var(--border-gold);
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+.btn-view-all-wall:hover {
+  background: var(--diya-gold);
+  color: #240901;
+}
+
+.wishes-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.mini-wish-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 211, 106, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-wish-card:hover {
+  border-color: var(--diya-gold);
+  background: rgba(255, 211, 106, 0.08);
+}
+
+.mini-wish-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--diya-gold);
+}
+
+.mini-dedication {
+  font-size: 11px;
+  color: #F87171;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.mini-text {
+  font-size: 13px;
+  color: var(--cream);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Lore Box */
+.card-lore-box .lore-inner-card {
+  background: rgba(27, 16, 34, 0.7);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.lore-inner-card h4 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--diya-gold);
+  margin-bottom: 8px;
+}
+
+.lore-inner-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 404 Page */
+.not-found-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.not-found-card {
+  text-align: center;
+  background: rgba(27, 16, 34, 0.85);
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 48px 32px;
+  max-width: 520px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.not-found-icon {
+  font-size: 54px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.not-found-card h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--diya-gold);
+  margin-bottom: 12px;
+}
+
+.not-found-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.btn-return-home {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--diya-gold), var(--marigold));
+  color: #240901;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 99px;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.4);
+}
