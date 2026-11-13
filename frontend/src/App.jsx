@@ -1,122 +1,112 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { getSteps, validate, getLamps, addLamp } from './api';
+import PlayingCard from '../src/components/PlayingCard';
+import MemoryWall from '../src/components/MemoryWall';
+import CompletionModal from '../src/components/CompletionModal';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [steps, setSteps] = useState([]);
+  const [i, setI] = useState(0);
+  const [solved, setSolved] = useState(false);
+  const [played, setPlayed] = useState(null);
+  const [msg, setMsg] = useState({ text: '', ok: null });
+  const [shake, setShake] = useState(null);
+  const [lamps, setLamps] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [error, setError] = useState('');
 
+  useEffect(() => {
+    Promise.all([getSteps(), getLamps()])
+      .then(([s, l]) => { setSteps(s); setLamps(l); })
+      .catch(() => setError('Could not reach the server. Is the API running?'));
+  }, []);
+
+  const step = steps[i];
+  const last = i === steps.length - 1;
+
+  const attempt = async (action, key) => {
+    if (solved) return;
+    const r = await validate(step.id, action);
+    setMsg({ text: r.message, ok: r.valid });
+    if (r.valid) {
+      setSolved(true);
+      if (step.type === 'play') setPlayed(key);
+      if (last) setTimeout(() => setModal(true), 900);
+    } else {
+      setShake(key);
+      setTimeout(() => setShake(null), 400);
+    }
+  };
+
+  const next = () => {
+    if (last) return setModal(true);
+    setI(i + 1); setSolved(false); setPlayed(null); setMsg({ text: '', ok: null });
+  };
+  const restart = () => { setI(0); setSolved(false); setPlayed(null); setMsg({ text: '', ok: null }); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+
+  const light = async (name, reflection) => {
+    const lamp = await addLamp(name, reflection);
+    setLamps((l) => [lamp, ...l]);
+    setModal(false);
+    document.querySelector('.wall')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  if (error) return <div className="wrap"><p className="msg bad">{error}</p></div>;
+  if (!step) return <div className="wrap"><p className="sub">Lighting the lamps…</p></div>;
+
+  const lit = i + (solved ? 1 : 0);
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="wrap">
+      <div className="garland" aria-hidden="true">🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️</div>
+      <header>
+        <h1>Taas Tihar</h1>
+        <p>Learn Call Break in four quick hands. Finish, and light your diyo on the memory wall.</p>
+        <div className="lamps" aria-label="Progress">
+          {steps.map((s, k) => <span key={s.id} className={`lamp ${k < lit ? 'on' : ''}`}>🪔</span>)}
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </header>
 
-      <div className="ticks"></div>
+      <div className="tip"><b>Dai’s Rulebook Tip:</b> {step.tip}</div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      <div className="table">
+        <div style={{ textAlign: 'center' }}><span className="hukum">Hukum (trump): ♠ Spades</span></div>
+        <div className="trick">
+          {step.table.map((t) => (
+            <div className="slot" key={t.card}><PlayingCard card={t.card} pop />{t.label}</div>
+          ))}
+          {played && <div className="slot"><PlayingCard card={played} pop />You</div>}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <div className="hand">
+          {step.hand.filter((c) => c !== played).map((c) => (
+            <PlayingCard key={c} card={c} shake={shake === c}
+              onClick={step.type === 'play' && !solved ? (card) => attempt(card, card) : undefined} />
+          ))}
+        </div>
+
+        {step.type === 'bid' && (
+          <div className="bids">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button key={n} className={`bid ${shake === n ? 'shake' : ''}`} disabled={solved} onClick={() => attempt(`BID_${n}`, n)}>Call {n}</button>
+            ))}
+          </div>
+        )}
+
+        <div className={`msg ${msg.ok === null ? '' : msg.ok ? 'good' : 'bad'}`} role="status" aria-live="polite">
+          {msg.text || (step.type === 'bid' ? 'Pick your call.' : 'Your turn. Choose a card.')}
+        </div>
+      </div>
+
+      <div className="actions">
+        {solved && <button className="cta" onClick={next}>{last ? 'Light my diyo 🪔' : 'Next hand'}</button>}
+        {solved && last && <button className="link" onClick={restart}>Play again</button>}
+      </div>
+      <div className="dots">Hand {i + 1} of {steps.length}: {step.title}</div>
+
+      <MemoryWall lamps={lamps} />
+      <footer>Happy Tihar. Jai Chhathi Maiya. 🪔</footer>
+
+      {modal && <CompletionModal onClose={() => setModal(false)} onSubmit={light} />}
+    </div>
+  );
 }
-
-export default App
