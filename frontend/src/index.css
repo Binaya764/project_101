@@ -3215,3 +3215,1214 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ==========================================================================
+   KUCC Competition Tag & Enhanced Nav Badges
+   ========================================================================== */
+.brand-main-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.competition-track-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 74, 50, 0.25));
+  border: 1px solid var(--diya-gold);
+  color: var(--diya-gold);
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Rangoli Studio Styles
+   ========================================================================== */
+.rangoli-studio-section {
+  padding: 80px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.rangoli-workspace {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.rangoli-toolbox {
+  background: rgba(27, 16, 34, 0.85);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 22px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toolbox-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--diya-gold);
+  margin-bottom: 8px;
+}
+
+.toolbox-buttons-row {
+  display: flex;
+  gap: 8px;
+}
+
+.tool-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  color: var(--cream);
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tool-btn.active {
+  background: var(--diya-gold);
+  color: #240901;
+  border-color: var(--diya-gold);
+}
+
+.symmetry-picker {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sym-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 211, 106, 0.18);
+  color: var(--cream);
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.sym-btn.active {
+  background: var(--warm-amber);
+  color: #240901;
+  font-weight: 700;
+}
+
+.pigment-swatches-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.swatch-btn {
+  width: 100%;
+  height: 34px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.swatch-btn:hover {
+  transform: scale(1.1);
+}
+
+.swatch-btn.active {
+  border-color: #FFFFFF;
+  box-shadow: 0 0 10px #FFFFFF;
+  transform: scale(1.08);
+}
+
+.stamps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stamp-btn {
+  font-size: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.stamp-btn.active {
+  border-color: var(--diya-gold);
+  background: rgba(255, 211, 106, 0.15);
+}
+
+.brush-slider {
+  width: 100%;
+  accent-color: var(--diya-gold);
+}
+
+.toolbox-actions-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 211, 106, 0.15);
+}
+
+.action-pill-btn {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(255, 211, 106, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--cream);
+}
+
+.action-pill-btn.btn-danger {
+  color: #F87171;
+  border-color: #EF4444;
+}
+
+.action-pill-btn.btn-gold {
+  background: var(--diya-gold);
+  color: #240901;
+  border: none;
+}
+
+.action-pill-btn.btn-publish {
+  background: linear-gradient(135deg, var(--marigold), #EA580C);
+  color: #240901;
+  border: none;
+}
+
+.rangoli-canvas-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.rangoli-drawing-canvas {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  border: 4px solid var(--border-gold);
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.canvas-instruction-pill {
+  font-size: 13px;
+  color: var(--diya-gold);
+  background: rgba(255, 211, 106, 0.08);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  padding: 6px 16px;
+  border-radius: 99px;
+}
+
+.rangoli-toast-alert {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-plum);
+  border: 2px solid var(--diya-gold);
+  color: var(--cream);
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  z-index: 250;
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ==========================================================================
+   Chhath Section Styles
+   ========================================================================== */
+.chhath-section {
+  padding: 80px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.chhath-badge {
+  background: rgba(234, 88, 12, 0.15);
+  border-color: #EA580C;
+  color: #FDBA74;
+}
+
+.chhath-days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.chhath-day-tab {
+  background: rgba(27, 16, 34, 0.75);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.chhath-day-tab.active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 74, 50, 0.2));
+  border-color: var(--diya-gold);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+}
+
+.chhath-day-badge {
+  font-size: 11px;
+  color: var(--warm-amber);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.chhath-day-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.chhath-day-tag {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.chhath-editorial-card {
+  background: radial-gradient(ellipse at 80% 20%, #34151C 0%, #1A0B1A 65%, #0F0514 100%);
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 34px;
+  margin-bottom: 48px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.chhath-editorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chhath-editorial-header h3 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: var(--diya-gold);
+}
+
+.editorial-subtitle {
+  font-size: 15px;
+  color: var(--warm-amber);
+  font-style: italic;
+}
+
+.sun-emblem {
+  font-size: 48px;
+}
+
+.editorial-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+
+.chhath-rituals-list h4 {
+  font-size: 14px;
+  color: var(--diya-gold);
+  margin-bottom: 8px;
+}
+
+.chhath-rituals-list ul {
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Ghat Locator */
+.ghat-locator-container {
+  background: rgba(27, 16, 34, 0.8);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 48px;
+}
+
+.locator-header {
+  margin-bottom: 24px;
+}
+
+.locator-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pin-icon {
+  font-size: 32px;
+}
+
+.locator-title-row h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--cream);
+}
+
+.locator-title-row p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.ghats-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 24px;
+}
+
+.ghats-selection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.ghat-list-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 211, 106, 0.15);
+  border-radius: 14px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghat-list-item:hover, .ghat-list-item.active-ghat {
+  background: rgba(255, 211, 106, 0.12);
+  border-color: var(--diya-gold);
+}
+
+.ghat-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.ghat-loc-pill {
+  font-size: 11px;
+  color: var(--warm-amber);
+  background: rgba(245, 158, 11, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.ghat-nepali-text {
+  font-size: 12px;
+  color: var(--cream-soft);
+  display: block;
+}
+
+.ghat-timing-snippet {
+  font-size: 11px;
+  color: rgba(255, 211, 106, 0.8);
+  margin-top: 4px;
+  display: block;
+}
+
+/* Ghat Showcase Panel */
+.ghat-showcase-panel {
+  background: #150A1C;
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ghat-banner-graphic {
+  position: relative;
+  height: 150px;
+  background: radial-gradient(circle at 50% 120%, #FF9F43 0%, #D94A32 50%, #4A0E17 100%);
+  padding: 20px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.banner-badge {
+  font-size: 10px;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--diya-gold);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.ghat-banner-info h4 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: #FFFDF9;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.banner-nepali {
+  font-size: 13px;
+  color: var(--cream-soft);
+  display: block;
+}
+
+.banner-loc {
+  font-size: 12px;
+  color: #FFF4D6;
+}
+
+.ghat-details-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ghat-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.meta-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.meta-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.meta-val {
+  font-size: 13px;
+  color: var(--diya-gold);
+}
+
+.ghat-vibe-quote {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--cream-soft);
+}
+
+.ghat-highlight-box {
+  font-size: 13px;
+  color: var(--cream);
+  background: rgba(255, 211, 106, 0.08);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+/* Virtual Arghya Offering */
+.virtual-arghya-card {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.18), rgba(245, 158, 11, 0.12));
+  border: 2px solid var(--border-gold);
+  border-radius: 24px;
+  padding: 34px;
+}
+
+.arghya-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.header-text {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.basket-icon {
+  font-size: 38px;
+}
+
+.header-text h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--cream);
+}
+
+.header-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.arghya-counter-badge {
+  text-align: right;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 8px 18px;
+}
+
+.count-num {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--diya-gold);
+  display: block;
+}
+
+.count-lbl {
+  font-size: 11px;
+  color: var(--cream-soft);
+}
+
+.picker-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--diya-gold);
+  margin-bottom: 12px;
+}
+
+.arghya-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.arghya-item-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 211, 106, 0.18);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: var(--cream);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.arghya-item-pill.selected {
+  background: rgba(255, 211, 106, 0.16);
+  border-color: var(--diya-gold);
+}
+
+.item-icon {
+  font-size: 22px;
+}
+
+.item-texts {
+  flex: 1;
+}
+
+.item-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.item-note {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.check-box {
+  font-weight: 700;
+  color: var(--diya-gold);
+}
+
+.devotee-input-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.devotee-input {
+  flex: 1;
+  min-width: 240px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 211, 106, 0.25);
+  border-radius: 99px;
+  padding: 12px 20px;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.btn-submit-arghya {
+  background: linear-gradient(135deg, #FFB300, #F59E0B, #EA580C);
+  color: #240901;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.45);
+}
+
+.arghya-success-banner {
+  margin-top: 24px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1.5px solid #10B981;
+  border-radius: 16px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  animation: popIn 0.4s ease-out;
+}
+
+.success-sun {
+  font-size: 38px;
+}
+
+.arghya-success-banner h4 {
+  font-size: 18px;
+  color: #34D399;
+  margin-bottom: 4px;
+}
+
+.chhath-hymn-verse {
+  font-size: 14px;
+  color: var(--diya-gold);
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.devotee-blessing-note {
+  font-size: 13px;
+  color: var(--cream);
+}
+
+/* ==========================================================================
+   Deusi-Bhailo Studio Styles
+   ========================================================================== */
+.deusi-studio-section {
+  padding: 80px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.deusi-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.madal-pad-card, .verse-generator-card {
+  background: rgba(27, 16, 34, 0.85);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 22px;
+  padding: 28px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-top-header h4 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--diya-gold);
+}
+
+.sub-instruction {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.madal-visual-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 10px;
+}
+
+.madal-cylinder-body {
+  width: 100%;
+  max-width: 380px;
+  height: 120px;
+  background: radial-gradient(ellipse at 50% 50%, #8A4A1C 0%, #4D2108 70%, #2A1003 100%);
+  border: 3px solid #FFD36A;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.madal-drumhead {
+  height: 96px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.madal-drumhead.left-bass {
+  width: 90px;
+  background: radial-gradient(circle, #2A1D15 0%, #170F0B 100%);
+  border: 2px solid #D97706;
+}
+
+.madal-drumhead.left-bass:active {
+  transform: scale(0.92);
+}
+
+.madal-wood-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.madal-center-emblem {
+  font-size: 32px;
+}
+
+.madal-drumhead.right-treble {
+  width: 105px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.treble-half {
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: 1.5px solid #FFD36A;
+  background: radial-gradient(circle, #3D291F 0%, #1A100A 100%);
+  color: var(--cream);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.treble-half:active {
+  transform: scale(0.94);
+}
+
+.stroke-label {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--diya-gold);
+}
+
+.stroke-sub {
+  font-size: 9px;
+  color: var(--cream-soft);
+}
+
+.loops-controller {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 211, 106, 0.15);
+  padding-top: 18px;
+}
+
+.loops-label {
+  font-size: 12px;
+  color: var(--cream-soft);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.loops-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.loop-toggle-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  color: var(--cream);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.loop-toggle-btn.active-playing {
+  background: var(--diya-gold);
+  color: #240901;
+  font-weight: 700;
+  border-color: var(--diya-gold);
+  box-shadow: 0 0 12px rgba(255, 211, 106, 0.5);
+}
+
+/* Verse Generator Card */
+.verse-header {
+  margin-bottom: 16px;
+}
+
+.verse-header h4 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--diya-gold);
+  margin-bottom: 10px;
+}
+
+.verse-theme-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.theme-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 211, 106, 0.15);
+  color: var(--cream);
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+.theme-pill.active {
+  background: var(--warm-amber);
+  color: #240901;
+  font-weight: 700;
+}
+
+.verse-display-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 211, 106, 0.15);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 18px;
+  flex: 1;
+}
+
+.lead-call-row, .chorus-response-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.caller-tag {
+  color: var(--warm-amber);
+  font-weight: 700;
+}
+
+.lead-text {
+  color: var(--diya-gold);
+}
+
+.chorus-tag {
+  color: #34D399;
+  font-weight: 700;
+}
+
+.response-text {
+  color: #6EE7B7;
+}
+
+.stanza-lyrics-box {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 211, 106, 0.2);
+}
+
+.stanza-lyrics {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cream);
+  white-space: pre-line;
+}
+
+.verse-actions-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-next-verse {
+  flex: 1;
+  background: var(--diya-gold);
+  color: #240901;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-copy-verse {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 211, 106, 0.25);
+  color: var(--cream);
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Kukur Tihar Tribute Styles
+   ========================================================================== */
+.kukur-tribute-section {
+  padding: 80px 24px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.tribute-top-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.btn-add-pet-tribute {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid var(--border-gold);
+  color: var(--diya-gold);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 22px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-pet-tribute:hover {
+  background: rgba(255, 211, 106, 0.15);
+  border-color: var(--diya-gold);
+}
+
+.pet-tribute-form-card {
+  max-width: 580px;
+  margin: 0 auto 34px;
+  background: #1B1022;
+  border: 1.5px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 22px;
+}
+
+.pet-tribute-form-card h4 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--diya-gold);
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.pet-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.avatar-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.avatars-options {
+  display: flex;
+  gap: 6px;
+}
+
+.av-btn {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.av-btn.active {
+  border-color: var(--diya-gold);
+  background: rgba(255, 211, 106, 0.2);
+}
+
+.pet-input-text {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 211, 106, 0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--cream);
+  font-size: 14px;
+}
+
+.btn-save-tribute {
+  background: linear-gradient(135deg, var(--marigold), #EA580C);
+  color: #240901;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.dogs-tribute-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.dog-tribute-card {
+  background: rgba(27, 16, 34, 0.85);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 22px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.dog-tribute-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--diya-gold);
+}
+
+.dog-portrait-zone {
+  margin-bottom: 14px;
+}
+
+.dog-avatar-emblem {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(255, 211, 106, 0.35);
+}
+
+.dog-emoji {
+  font-size: 52px;
+}
+
+.vermilion-tika-dot {
+  position: absolute;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  background: #DC2626;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #DC2626;
+}
+
+.sayapatri-garland-wrap {
+  position: absolute;
+  bottom: -4px;
+  font-size: 14px;
+}
+
+.dog-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+
+.dog-role-tag {
+  font-size: 12px;
+  color: var(--warm-amber);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.dog-story-quote {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.dog-card-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-garland-action {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 211, 106, 0.25);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+.btn-garland-action.garlanded {
+  border-color: #F59E0B;
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--diya-gold);
+}
+
+.loves-counter {
+  font-size: 12px;
+  color: var(--cream-soft);
+}
+
+@media (max-width: 900px) {
+  .rangoli-workspace {
+    grid-template-columns: 1fr;
+  }
+  .ghats-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .deusi-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}

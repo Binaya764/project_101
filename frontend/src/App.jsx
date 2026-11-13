@@ -6,6 +6,10 @@ import Hero from './components/Hero';
 import DiyaWall from './components/DiyaWall';
 import Statistics from './components/Statistics';
 import GamesSection from './components/GamesSection';
+import RangoliStudio from './components/RangoliStudio';
+import ChhathSection from './components/ChhathSection';
+import DeusiBhailoStudio from './components/DeusiBhailoStudio';
+import KukurTiharTribute from './components/KukurTiharTribute';
 import AboutTihar from './components/AboutTihar';
 import Footer from './components/Footer';
 import DiyaModal from './components/DiyaModal';
@@ -132,11 +136,23 @@ export default function App() {
           newlyAddedId={newlyAddedId}
         />
 
-        {/* Celebration Statistics Section */}
-        <Statistics totalDiyosCount={totalCount} />
-
         {/* Traditional Nepali Card Games: Call Break, Dhumbal, Marriage */}
         <GamesSection />
+
+        {/* Interactive Rangoli & Mandala Studio */}
+        <RangoliStudio />
+
+        {/* Chhath Puja Mahaparva: 4 Days, Ghat Locator & Virtual Arghya */}
+        <ChhathSection />
+
+        {/* Deusi-Bhailo Rhythm Pad Jam & Rhyme Generator */}
+        <DeusiBhailoStudio />
+
+        {/* Kukur Tihar Loyal Companion Tribute & Pet Hall of Fame */}
+        <KukurTiharTribute />
+
+        {/* Celebration Statistics Section */}
+        <Statistics totalDiyosCount={totalCount} />
 
         {/* About Tihar & The Five Days of Yamapanchak */}
         <AboutTihar />

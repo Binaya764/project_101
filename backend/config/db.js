@@ -1,14 +1,27 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const url = process.env.MONGO_URI;
-const connectDB = async()=>{
-    try{
-        await mongoose.connect(url,{});
-        console.log("Database connected");
-    }catch(err){
-        console.error("Error connecting to the DB",err);
-        process.exit(1);
-    }
-}
-module.exports= connectDB;
+let isConnected = false;
+
+const connectDB = async () => {
+  const url = process.env.MONGO_URI;
+  if (!url) {
+    console.log("ℹ️ MONGO_URI not provided. Running in resilient in-memory datastore mode.");
+    return false;
+  }
+  try {
+    // 3 second connection timeout to prevent hanging if remote DB is unreachable
+    await mongoose.connect(url, {
+      serverSelectionTimeoutMS: 3000
+    });
+    isConnected = true;
+    console.log("✅ MongoDB successfully connected");
+    return true;
+  } catch (err) {
+    console.warn("⚠️ Remote MongoDB connection failed or timed out. Falling back to in-memory store seamlessly.", err.message);
+    isConnected = false;
+    return false;
+  }
+};
+
+module.exports = connectDB;

@@ -16,9 +16,12 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
   const navLinks = [
     { name: 'Home', href: '#home', nepali: 'गृह' },
     { name: 'Diyo Wall', href: '#diyo-wall', nepali: 'दियो भित्तो' },
-    { name: 'Games of Tihar', href: '#games', nepali: 'तिहारका तास' },
-    { name: 'About Tihar', href: '#about-tihar', nepali: 'तिहारको महत्व' },
-    { name: 'Celebration Stats', href: '#stats', nepali: 'तथ्यांक' }
+    { name: 'Card Games', href: '#games', nepali: 'तास खेल' },
+    { name: 'Rangoli Studio', href: '#rangoli-studio', nepali: 'रङ्गोली' },
+    { name: 'Chhath Parva', href: '#chhath-section', nepali: 'छठ महापर्व' },
+    { name: 'Deusi Jam', href: '#deusi-studio', nepali: 'देउसी-भैलो' },
+    { name: 'Kukur Tribute', href: '#kukur-tribute', nepali: 'कुकुर पूजा' },
+    { name: 'About Tihar', href: '#about-tihar', nepali: 'यमपञ्चक' }
   ];
 
   const handleNavClick = (e, href) => {
@@ -40,8 +43,13 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             <div className="logo-sparkle" />
           </div>
           <div className="brand-text">
-            <span className="brand-english">JHILIMILI</span>
-            <span className="brand-nepali">झिलिमिली</span>
+            <div className="brand-main-row">
+              <span className="brand-english">JHILIMILI</span>
+              <span className="competition-track-tag" title="KUCC Tihar-Chhath Web UI Design Competition 2026">
+                KUCC Advanced Track
+              </span>
+            </div>
+            <span className="brand-nepali">झिलिमिली • तिहार र छठ महापर्व</span>
           </div>
         </a>
 
@@ -106,7 +114,7 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             <div className="drawer-header">
               <div className="brand-text">
                 <span className="brand-english">JHILIMILI</span>
-                <span className="brand-nepali">झिलिमिली</span>
+                <span className="brand-nepali">झिलिमिली • तिहार र छठ</span>
               </div>
               <button
                 type="button"
