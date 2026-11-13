@@ -1,112 +1,167 @@
-import { useEffect, useState } from 'react';
-import { getSteps, validate, getLamps, addLamp } from './api';
-import PlayingCard from '../src/components/PlayingCard';
-import MemoryWall from '../src/components/MemoryWall';
-import CompletionModal from '../src/components/CompletionModal';
+import React, { useState, useEffect } from 'react';
+import Navbar from './components/Navbar';
+import FairyLights from './components/FairyLights';
+import FloatingParticles from './components/FloatingParticles';
+import Hero from './components/Hero';
+import DiyaWall from './components/DiyaWall';
+import Statistics from './components/Statistics';
+import GamesSection from './components/GamesSection';
+import AboutTihar from './components/AboutTihar';
+import Footer from './components/Footer';
+import DiyaModal from './components/DiyaModal';
+import DiyaDetailModal from './components/DiyaDetailModal';
+
+import {
+  getStoredDiyas,
+  saveUserDiya,
+  getLikedDiyaIds,
+  toggleLikeDiya,
+  getSoundPreference,
+  saveSoundPreference
+} from './utils/storage';
+import { soundManager } from './utils/audio';
 
 export default function App() {
-  const [steps, setSteps] = useState([]);
-  const [i, setI] = useState(0);
-  const [solved, setSolved] = useState(false);
-  const [played, setPlayed] = useState(null);
-  const [msg, setMsg] = useState({ text: '', ok: null });
-  const [shake, setShake] = useState(null);
-  const [lamps, setLamps] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [error, setError] = useState('');
+  const [diyos, setDiyos] = useState([]);
+  const [totalCount, setTotalCount] = useState(12480);
+  const [isLightModalOpen, setIsLightModalOpen] = useState(false);
+  const [selectedDiya, setSelectedDiya] = useState(null);
+  const [likedDiyaIds, setLikedDiyaIds] = useState(new Set());
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [newlyAddedId, setNewlyAddedId] = useState(null);
 
+  // Initialize data on mount
   useEffect(() => {
-    Promise.all([getSteps(), getLamps()])
-      .then(([s, l]) => { setSteps(s); setLamps(l); })
-      .catch(() => setError('Could not reach the server. Is the API running?'));
+    const loadedDiyas = getStoredDiyas();
+    setDiyos(loadedDiyas);
+
+    const userCount = loadedDiyas.filter(d => d.isUserSubmission).length;
+    setTotalCount(12480 + userCount);
+
+    setLikedDiyaIds(getLikedDiyaIds());
+
+    const soundPref = getSoundPreference();
+    setSoundEnabled(soundPref);
+    soundManager.setMuted(!soundPref);
   }, []);
 
-  const step = steps[i];
-  const last = i === steps.length - 1;
-
-  const attempt = async (action, key) => {
-    if (solved) return;
-    const r = await validate(step.id, action);
-    setMsg({ text: r.message, ok: r.valid });
-    if (r.valid) {
-      setSolved(true);
-      if (step.type === 'play') setPlayed(key);
-      if (last) setTimeout(() => setModal(true), 900);
-    } else {
-      setShake(key);
-      setTimeout(() => setShake(null), 400);
+  // Toggle Sound
+  const handleToggleSound = () => {
+    const nextVal = !soundEnabled;
+    setSoundEnabled(nextVal);
+    soundManager.setMuted(!nextVal);
+    saveSoundPreference(nextVal);
+    if (nextVal) {
+      soundManager.playDiyaChime();
     }
   };
 
-  const next = () => {
-    if (last) return setModal(true);
-    setI(i + 1); setSolved(false); setPlayed(null); setMsg({ text: '', ok: null });
+  // Submit New Diya
+  const handleSubmitNewDiya = (newDiya) => {
+    saveUserDiya(newDiya);
+    setDiyos(prev => [newDiya, ...prev]);
+    setTotalCount(prev => prev + 1);
+    setNewlyAddedId(newDiya.id);
+    setIsLightModalOpen(false);
+
+    // Smoothly scroll to wall
+    setTimeout(() => {
+      const wallEl = document.querySelector('#diyo-wall');
+      if (wallEl) {
+        wallEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 200);
+
+    // Clear newly added highlight after 6 seconds
+    setTimeout(() => {
+      setNewlyAddedId(null);
+    }, 6000);
   };
-  const restart = () => { setI(0); setSolved(false); setPlayed(null); setMsg({ text: '', ok: null }); window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-  const light = async (name, reflection) => {
-    const lamp = await addLamp(name, reflection);
-    setLamps((l) => [lamp, ...l]);
-    setModal(false);
-    document.querySelector('.wall')?.scrollIntoView({ behavior: 'smooth' });
+  // Like a Diya
+  const handleLikeDiya = (diyaId) => {
+    toggleLikeDiya(diyaId);
+    setLikedDiyaIds(prev => {
+      const next = new Set(prev);
+      if (next.has(diyaId)) {
+        next.delete(diyaId);
+      } else {
+        next.add(diyaId);
+      }
+      return next;
+    });
   };
 
-  if (error) return <div className="wrap"><p className="msg bad">{error}</p></div>;
-  if (!step) return <div className="wrap"><p className="sub">Lighting the lamps…</p></div>;
+  const handleExploreWall = () => {
+    const wallEl = document.querySelector('#diyo-wall');
+    if (wallEl) {
+      wallEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-  const lit = i + (solved ? 1 : 0);
   return (
-    <div className="wrap">
-      <div className="garland" aria-hidden="true">🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️</div>
-      <header>
-        <h1>Taas Tihar</h1>
-        <p>Learn Call Break in four quick hands. Finish, and light your diyo on the memory wall.</p>
-        <div className="lamps" aria-label="Progress">
-          {steps.map((s, k) => <span key={s.id} className={`lamp ${k < lit ? 'on' : ''}`}>🪔</span>)}
-        </div>
-      </header>
+    <div className="jhilimili-app-root">
+      {/* Background Animated Floating Golden Dust Particles */}
+      <FloatingParticles />
 
-      <div className="tip"><b>Dai’s Rulebook Tip:</b> {step.tip}</div>
+      {/* Hanging Golden Fairy Lights across page top */}
+      <FairyLights />
 
-      <div className="table">
-        <div style={{ textAlign: 'center' }}><span className="hukum">Hukum (trump): ♠ Spades</span></div>
-        <div className="trick">
-          {step.table.map((t) => (
-            <div className="slot" key={t.card}><PlayingCard card={t.card} pop />{t.label}</div>
-          ))}
-          {played && <div className="slot"><PlayingCard card={played} pop />You</div>}
-        </div>
+      {/* Elegant Glassmorphism Navigation Bar */}
+      <Navbar
+        onOpenLightModal={() => setIsLightModalOpen(true)}
+        soundEnabled={soundEnabled}
+        onToggleSound={handleToggleSound}
+      />
 
-        <div className="hand">
-          {step.hand.filter((c) => c !== played).map((c) => (
-            <PlayingCard key={c} card={c} shake={shake === c}
-              onClick={step.type === 'play' && !solved ? (card) => attempt(card, card) : undefined} />
-          ))}
-        </div>
+      <main className="main-content-flow">
+        {/* Hero Section */}
+        <Hero
+          totalDiyosCount={totalCount}
+          onOpenLightModal={() => setIsLightModalOpen(true)}
+          onExploreWall={handleExploreWall}
+        />
 
-        {step.type === 'bid' && (
-          <div className="bids">
-            {[1, 2, 3, 4, 5].map((n) => (
-              <button key={n} className={`bid ${shake === n ? 'shake' : ''}`} disabled={solved} onClick={() => attempt(`BID_${n}`, n)}>Call {n}</button>
-            ))}
-          </div>
-        )}
+        {/* The Virtual Diyo Wall */}
+        <DiyaWall
+          diyos={diyos}
+          onOpenLightModal={() => setIsLightModalOpen(true)}
+          onSelectDiya={(diya) => setSelectedDiya(diya)}
+          onLikeDiya={handleLikeDiya}
+          likedDiyaIds={likedDiyaIds}
+          newlyAddedId={newlyAddedId}
+        />
 
-        <div className={`msg ${msg.ok === null ? '' : msg.ok ? 'good' : 'bad'}`} role="status" aria-live="polite">
-          {msg.text || (step.type === 'bid' ? 'Pick your call.' : 'Your turn. Choose a card.')}
-        </div>
-      </div>
+        {/* Celebration Statistics Section */}
+        <Statistics totalDiyosCount={totalCount} />
 
-      <div className="actions">
-        {solved && <button className="cta" onClick={next}>{last ? 'Light my diyo 🪔' : 'Next hand'}</button>}
-        {solved && last && <button className="link" onClick={restart}>Play again</button>}
-      </div>
-      <div className="dots">Hand {i + 1} of {steps.length}: {step.title}</div>
+        {/* Traditional Nepali Card Games: Call Break, Dhumbal, Marriage */}
+        <GamesSection />
 
-      <MemoryWall lamps={lamps} />
-      <footer>Happy Tihar. Jai Chhathi Maiya. 🪔</footer>
+        {/* About Tihar & The Five Days of Yamapanchak */}
+        <AboutTihar />
+      </main>
 
-      {modal && <CompletionModal onClose={() => setModal(false)} onSubmit={light} />}
+      {/* Cultural Footer */}
+      <Footer onOpenLightModal={() => setIsLightModalOpen(true)} />
+
+      {/* "Light a Diya" Modal Dialog */}
+      {isLightModalOpen && (
+        <DiyaModal
+          onClose={() => setIsLightModalOpen(false)}
+          onSubmit={handleSubmitNewDiya}
+        />
+      )}
+
+      {/* Diya Detail / Wish Card Modal */}
+      {selectedDiya && (
+        <DiyaDetailModal
+          diya={selectedDiya}
+          onClose={() => setSelectedDiya(null)}
+          onLike={handleLikeDiya}
+          isLiked={likedDiyaIds.has(selectedDiya.id)}
+        />
+      )}
     </div>
   );
 }
