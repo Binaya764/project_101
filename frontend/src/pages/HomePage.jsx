@@ -11,7 +11,7 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       title: "Virtual Diyo Wall",
       nepali: "दियो भित्तो",
       url: "/wall",
-      icon: "🪔",
+      image: "/images/diya.png",
       badge: "Main Highlight",
       desc: "Hundreds of glowing diyos carrying heartfelt prayers from Kathmandu to New York, Sydney, and London.",
       actionText: "Enter the Wall →"
@@ -20,52 +20,27 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       title: "Games of Tihar",
       nepali: "तिहारका तास",
       url: "/games",
-      icon: "🎴",
+      image: "/images/tihar.png",
       badge: "3 Playable Games",
       desc: "Play Call Break, Dhumbal (Jhyap), and 21-card Marriage against intelligent AI opponents at a traditional felt table.",
       actionText: "Play Games →"
     },
-    {
-      title: "Rangoli & Mandala Studio",
-      nepali: "रङ्गोली स्टुडियो",
-      url: "/rangoli",
-      icon: "🎨",
-      badge: "Interactive Canvas",
-      desc: "Draw sacred geometric floor art with real-time radial symmetry (4–12 fold), festival pigments, and PNG export.",
-      actionText: "Open Studio →"
-    },
+
     {
       title: "Chhath Puja Mahaparva",
       nepali: "छठ महापर्व",
       url: "/chhath",
-      icon: "☀️",
+      image: "/images/chhath.png",
       badge: "Ghats & Arghya",
       desc: "Explore Nepal's sacred Chhath Ghats, learn the 4-day rituals, and offer virtual Arghya with holy prasad to Lord Surya.",
       actionText: "Explore Chhath →"
     },
-    {
-      title: "Deusi-Bhailo Rhythm Jam",
-      nepali: "देउसी-भैलो धुन",
-      url: "/deusi-jam",
-      icon: "🪘",
-      badge: "Madal Drum Pad",
-      desc: "Tap live Madal drum hits (Dhin, Tak, Khinta), groove to folk loops, and generate rhyming Deusi couplets.",
-      actionText: "Start Jamming →"
-    },
-    {
-      title: "Kukur Tihar Tribute",
-      nepali: "कुकुर तिहार श्रद्धाञ्जली",
-      url: "/kukur-tribute",
-      icon: "🐕",
-      badge: "Pet Hall of Fame",
-      desc: "Drape virtual marigold garlands and vermilion tika on rescue dogs and cherished family pets.",
-      actionText: "View Tributes →"
-    },
+
     {
       title: "Yamapanchak Story",
       nepali: "५ दिनको महत्व",
       url: "/about-tihar",
-      icon: "🏵️",
+      image: "/images/lamp.jpg",
       badge: "Editorial Guide",
       desc: "In-depth cultural narrative on the five auspicious days, sacred lunar tithis, and timeless Nepali customs.",
       actionText: "Read Story →"
@@ -74,7 +49,7 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       title: "Celebration Pulse",
       nepali: "महोत्सव तथ्यांक",
       url: "/stats",
-      icon: "📊",
+      image: "/images/diya.png",
       badge: "Global Reach",
       desc: "Interactive global analytics showing participants across 64+ nations and regional diaspora distribution.",
       actionText: "View Analytics →"
@@ -112,20 +87,54 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
             <Link
               key={portal.url}
               to={portal.url}
-              className="portal-card-link"
+              className="portal-flip-card"
               onClick={() => soundManager.playCardPlay()}
             >
-              <div className="portal-card-header">
-                <span className="portal-icon">{portal.icon}</span>
-                <span className="portal-badge">{portal.badge}</span>
-              </div>
-              <div className="portal-card-titles">
-                <h3 className="portal-title">{portal.title}</h3>
-                <span className="portal-nepali">{portal.nepali}</span>
-              </div>
-              <p className="portal-desc">{portal.desc}</p>
-              <div className="portal-action-row">
-                <span className="action-text">{portal.actionText}</span>
+              <div className="portal-flip-content">
+
+                {/* BACK — shown by default, flips away on hover */}
+                <div className="portal-flip-back">
+                  <div className="portal-flip-back-content">
+                    {/* Floating ambient blobs */}
+                    <div className="portal-blob" />
+                    <div className="portal-blob portal-blob--mid" />
+                    <div className="portal-blob portal-blob--small" />
+
+                    {/* Festive back-side image from public folder */}
+                    <img
+                      src={portal.image}
+                      alt={portal.title}
+                      className="portal-flip-img"
+                    />
+
+                    {/* Back face title header & preview */}
+                    <div className="portal-back-info">
+                      <span className="portal-back-badge">{portal.badge}</span>
+                      <h3 className="portal-back-title">{portal.title}</h3>
+                      <span className="portal-back-nepali">{portal.nepali}</span>
+                    </div>
+
+                    <div className="portal-flip-hover-pill">
+                      <span>✨ Hover to Explore</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* FRONT — revealed on hover */}
+                <div className="portal-flip-front">
+                  <div className="portal-flip-front-content">
+                    <span className="portal-flip-badge">{portal.badge}</span>
+                    <div className="portal-flip-description">
+                      <div className="portal-flip-title-row">
+                        <p className="portal-flip-title">{portal.title}</p>
+                      </div>
+                      <span className="portal-flip-nepali">{portal.nepali}</span>
+                      <p className="portal-flip-desc">{portal.desc}</p>
+                      <span className="portal-flip-action">{portal.actionText}</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </Link>
           ))}
