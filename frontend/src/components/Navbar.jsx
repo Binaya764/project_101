@@ -19,10 +19,9 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
     { name: 'Home', path: '/', nepali: 'गृह' },
     { name: 'Diyo Wall', path: '/wall', nepali: 'दियो भित्तो' },
     { name: 'Card Games', path: '/games', nepali: 'तास खेल' },
-    { name: 'Rangoli Studio', path: '/rangoli', nepali: 'रङ्गोली' },
     { name: 'Chhath Parva', path: '/chhath', nepali: 'छठ महापर्व' },
-    { name: 'Deusi Jam', path: '/deusi-jam', nepali: 'देउसी-भैलो' },
-    { name: 'Kukur Tribute', path: '/kukur-tribute', nepali: 'कुकुर पूजा' },
+    
+    
     { name: 'About Tihar', path: '/about-tihar', nepali: 'यमपञ्चक' }
   ];
 
@@ -38,9 +37,7 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
           <div className="brand-text">
             <div className="brand-main-row">
               <span className="brand-english">JHILIMILI</span>
-              <span className="competition-track-tag" title="KUCC Tihar-Chhath Web UI Design Competition 2026">
-                KUCC Advanced Track
-              </span>
+              
             </div>
             <span className="brand-nepali">झिलिमिली • तिहार र छठ महापर्व</span>
           </div>
@@ -52,7 +49,7 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             <Link
               key={link.path}
               to={link.path}
-              className="nav-item-link"
+              className={`nav-item-link ${currentPath === link.path ? 'active' : ''}`}
               onClick={() => soundManager.playCardPlay()}
             >
               <span className="link-title">{link.name}</span>

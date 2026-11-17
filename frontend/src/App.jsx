@@ -14,10 +14,10 @@ import GamesPage from './pages/GamesPage';
 import CallBreakPage from './pages/CallBreakPage';
 import DhumbalPage from './pages/DhumbalPage';
 import MarriagePage from './pages/MarriagePage';
-import RangoliPage from './pages/RangoliPage';
+//import RangoliPage from './pages/RangoliPage';
 import ChhathPage from './pages/ChhathPage';
-import DeusiPage from './pages/DeusiPage';
-import KukurTributePage from './pages/KukurTributePage';
+//import DeusiPage from './pages/DeusiPage';
+//import KukurTributePage from './pages/KukurTributePage';
 import AboutTiharPage from './pages/AboutTiharPage';
 import StatsPage from './pages/StatsPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -156,17 +156,9 @@ function AppContent() {
           <Route path="/games/dhumbal" element={<DhumbalPage />} />
           <Route path="/games/marriage" element={<MarriagePage />} />
 
-          {/* Interactive Rangoli Studio Page */}
-          <Route path="/rangoli" element={<RangoliPage />} />
-
           {/* Chhath Puja Mahaparva & Ghats Page */}
           <Route path="/chhath" element={<ChhathPage />} />
 
-          {/* Deusi-Bhailo Rhythm Jam Page */}
-          <Route path="/deusi-jam" element={<DeusiPage />} />
-
-          {/* Kukur Tihar Loyal Companion Tribute Page */}
-          <Route path="/kukur-tribute" element={<KukurTributePage />} />
 
           {/* About Yamapanchak Editorial Page */}
           <Route path="/about-tihar" element={<AboutTiharPage />} />

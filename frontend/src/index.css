@@ -1,7 +1,8 @@
-/* ==========================================================================
-   JHILIMILI (झिलिमिली) — Virtual Tihar Celebration Platform
-   Visual Design System & Stylesheet
-   ========================================================================== */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Keep all your existing CSS imports/rules below this line */
 
 :root {
   /* Color Palette */
@@ -138,7 +139,7 @@ button {
    ========================================================================== */
 .site-navbar {
   position: sticky;
-  top: 0;
+  top: 15px;
   width: 100%;
   z-index: 90;
   transition: all 0.35s ease;
@@ -4768,4 +4769,70 @@ button {
   padding: 12px 28px;
   border-radius: 99px;
   box-shadow: 0 4px 18px rgba(245, 158, 11, 0.4);
+}
+/* Liquid Glass Pill Container around your existing .desktop-nav */
+.desktop-nav {
+  position: relative;
+  backdrop-filter: blur(12px) saturate(180%) contrast(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%) contrast(140%);
+  background: rgba(210, 193, 143, 0.14); /* Warm Tihar Amber tint (swap to rgba(0, 122, 255, 0.4) if you want the original blue) */
+  border: 1px solid rgba(235, 129, 42, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  padding: 6px;
+  border-radius: 99rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Glossy 3D Inner Rim Highlight from Uiverse */
+.desktop-nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 2px 2px 5px -2px rgba(247, 198, 62, 0.4),
+    inset -2px -2px 5px 2px rgba(228, 162, 19, 0.25),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Individual Nav Links styled like the Uiverse Pill Items */
+.desktop-nav .nav-item-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 24px;
+  border-radius: 999rem;
+  text-decoration: none;
+  transition:
+    background 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease-in-out;
+}
+
+/* Hover Effect with Inner Glass Rim & Subtle Tilt */
+.desktop-nav .nav-item-link:hover {
+  background-color: rgba(223, 127, 50, 0.1);
+  box-shadow:
+    inset 2px 2px 5px -2px rgba(164, 129, 129, 0.45),
+    inset -2px -1px 5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.2);
+  transform: rotate(2deg) scale(1.03);
+  color: #fde047;
+}
+
+/* Active Route Pill */
+.desktop-nav .nav-item-link.active {
+  background: rgba(255, 255, 255, 0.85);
+  color: #92400e; /* Deep warm amber text on bright glass pill */
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Tactile Click Press */
+.desktop-nav .nav-item-link:active {
+  transform: scale(0.96);
 }
