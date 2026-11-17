@@ -32,14 +32,11 @@ export default function Footer({ onOpenLightModal }) {
           <h4 className="footer-col-heading">Pages & Exploration</h4>
           <ul className="footer-links-list">
             <li><Link to="/">Home (गृह)</Link></li>
-            <li><Link to="/wall">Virtual Diyo Wall</Link></li>
-            <li><Link to="/games">Games of Tihar</Link></li>
-            <li><Link to="/rangoli">Rangoli Studio</Link></li>
-            <li><Link to="/chhath">Chhath Parva & Ghats</Link></li>
-            <li><Link to="/deusi-jam">Deusi-Bhailo Jam</Link></li>
-            <li><Link to="/kukur-tribute">Kukur Tribute</Link></li>
-            <li><Link to="/about-tihar">About Yamapanchak</Link></li>
-            <li><Link to="/stats">Celebration Pulse</Link></li>
+            <li><Link to="/wall">Virtual Diyo Wall (दियो भित्तो)</Link></li>
+            <li><Link to="/games">Games of Tihar (तिहारका तास)</Link></li>
+            <li><Link to="/chhath">Chhath Parva & Ghats (छठ महापर्व)</Link></li>
+            <li><Link to="/about-tihar">About Yamapanchak (यमपञ्चक)</Link></li>
+            <li><Link to="/stats">Celebration Pulse (महोत्सव तथ्यांक)</Link></li>
           </ul>
         </div>
 

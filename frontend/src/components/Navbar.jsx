@@ -35,10 +35,7 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             <div className="logo-sparkle" />
           </div>
           <div className="brand-text">
-            <div className="brand-main-row">
-              <span className="brand-english">JHILIMILI</span>
-              
-            </div>
+            <span className="brand-english">JHILIMILI</span>
             <span className="brand-nepali">झिलिमिली • तिहार र छठ महापर्व</span>
           </div>
         </Link>
