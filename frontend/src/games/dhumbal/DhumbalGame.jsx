@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlayingCard from '../shared/PlayingCard';
+import OpponentFanHand from '../shared/OpponentFanHand';
 import {
   DHUMBAL_PLAYERS,
   DHUMBAL_PLAYER_INFO,
@@ -316,11 +317,7 @@ export default function DhumbalGame({ onClose }) {
                 <span className="bid-info">Penalties: {scores.north} pts</span>
               </div>
             </div>
-            <div className="opponent-hand horizontal">
-              {hands.north.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="north" count={hands.north.length} />
           </div>
 
           {/* West Opponent (Bikash) */}
@@ -332,11 +329,7 @@ export default function DhumbalGame({ onClose }) {
                 <span className="bid-info">Penalties: {scores.west} pts</span>
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.west.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="west" count={hands.west.length} />
           </div>
 
           {/* Center Table: Draw Pile & Discard Pile */}
@@ -377,11 +370,7 @@ export default function DhumbalGame({ onClose }) {
                 <span className="bid-info">Penalties: {scores.east} pts</span>
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.east.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="east" count={hands.east.length} />
           </div>
 
           {/* South Player (Human) */}

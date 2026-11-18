@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlayingCard from '../shared/PlayingCard';
+import OpponentFanHand from '../shared/OpponentFanHand';
 import {
   MARRIAGE_PLAYERS,
   MARRIAGE_PLAYER_INFO,
@@ -237,8 +238,9 @@ export default function MarriageGame({ onClose }) {
               <div className="player-badge">
                 <span className="avatar">{MARRIAGE_PLAYER_INFO.east.avatar}</span>
                 <span className="name">{MARRIAGE_PLAYER_INFO.east.name}</span>
-                <span className="card-count">21 Cards</span>
+                <span className="card-count">{hands.east.length} Cards</span>
               </div>
+              <OpponentFanHand position="east" count={hands.east.length} />
             </div>
 
             {/* Center Piles */}
@@ -275,8 +277,9 @@ export default function MarriageGame({ onClose }) {
               <div className="player-badge">
                 <span className="avatar">{MARRIAGE_PLAYER_INFO.west.avatar}</span>
                 <span className="name">{MARRIAGE_PLAYER_INFO.west.name}</span>
-                <span className="card-count">21 Cards</span>
+                <span className="card-count">{hands.west.length} Cards</span>
               </div>
+              <OpponentFanHand position="west" count={hands.west.length} />
             </div>
           </div>
 

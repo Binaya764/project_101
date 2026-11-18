@@ -950,6 +950,7 @@ button {
 /* Individual Diya Node */
 .diya-node-wrapper {
   position: relative;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1048,75 +1049,190 @@ button {
   100% { transform: scale(1); }
 }
 
-/* Hover Tooltip */
-.diya-hover-tooltip {
+/* Ambient Blur Layer on the Courtyard Canvas */
+.canvas-ambient-backdrop-blur {
   position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  width: 250px;
-  background: rgba(23, 14, 30, 0.94);
-  border: 1px solid var(--border-gold);
-  border-radius: 14px;
-  padding: 12px 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(12px);
-  z-index: 50;
+  inset: 0;
   pointer-events: none;
-  animation: tooltipFade 0.25s ease-out;
+  background: radial-gradient(circle at 50% 50%, rgba(15, 7, 26, 0.45) 0%, rgba(8, 3, 14, 0.7) 100%);
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: opacity 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease;
+  z-index: 1;
 }
 
-@keyframes tooltipFade {
-  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+.canvas-ambient-backdrop-blur.is-blurred {
+  opacity: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
-.tooltip-header {
+.diyos-scattered-layout.has-active-focus .scattered-diya-slot:not(.slot-focused) {
+  opacity: 0.35;
+  filter: blur(1.5px) grayscale(20%);
+  transition: all 0.3s ease;
+}
+
+.scattered-diya-slot.slot-focused {
+  z-index: 10;
+  transform: scale(1.22) !important;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scattered-diya-slot.slot-focused .diya-glow-halo {
+  transform: scale(1.5);
+  filter: blur(12px);
+  opacity: 1;
+}
+
+/* Dedicated Bottom Courtyard Stage for Full Message Display */
+.courtyard-bottom-blessing-stage {
+  margin-top: 24px;
+  min-height: 140px;
+  border-radius: 20px;
+  background: rgba(14, 7, 23, 0.85);
+  border: 1.5px solid rgba(255, 211, 106, 0.3);
+  padding: 16px 22px;
+  position: relative;
+  z-index: 20;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 211, 106, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.courtyard-bottom-blessing-stage.is-active {
+  border-color: var(--diya-gold);
+  background: rgba(20, 10, 32, 0.96);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 211, 106, 0.2);
+}
+
+.bottom-blessing-empty-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 211, 106, 0.7);
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.bottom-blessing-empty-hint .hint-flame {
+  font-size: 22px;
+  animation: flameWobble 2s infinite ease-in-out alternate;
+}
+
+.bottom-blessing-card {
+  width: 100%;
+  cursor: pointer;
+  animation: fadeInBlessing 0.25s ease;
+}
+
+@keyframes fadeInBlessing {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.blessing-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
-  margin-bottom: 4px;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 211, 106, 0.2);
+  margin-bottom: 12px;
 }
 
-.tooltip-author {
-  font-weight: 700;
+.blessing-author-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.blessing-lamp-icon {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px #FFD700);
+}
+
+.blessing-author-name {
+  font-size: 16px;
+  font-family: var(--font-serif);
   color: var(--diya-gold);
 }
 
-.tooltip-country {
-  font-size: 11px;
-  color: var(--cream-soft);
-}
-
-.tooltip-dedication {
+.blessing-location-pill {
   font-size: 12px;
-  color: #F87171;
-  font-style: italic;
-  margin-bottom: 6px;
+  background: rgba(255, 211, 106, 0.12);
+  border: 1px solid rgba(255, 211, 106, 0.25);
+  color: #FEF08A;
+  padding: 2px 10px;
+  border-radius: 99px;
 }
 
-.tooltip-wish-snippet {
-  font-size: 13px;
-  color: var(--cream);
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.tooltip-footer {
+.blessing-type-actions {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 11px;
-  border-top: 1px solid rgba(255, 211, 106, 0.15);
-  padding-top: 6px;
+  gap: 10px;
 }
 
-.tooltip-type {
+.blessing-type-badge {
+  font-size: 12px;
   color: var(--warm-amber);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 211, 106, 0.15);
 }
 
-.tooltip-hint {
+.blessing-like-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #FCA5A5;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.blessing-like-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  transform: scale(1.05);
+}
+
+.blessing-dedication-banner {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #EF4444;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #FCA5A5;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.blessing-full-message {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #FFF9ED;
+  font-style: italic;
+  font-family: var(--font-serif);
+  padding: 4px 0 8px;
+  word-break: break-word;
+}
+
+.blessing-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 211, 106, 0.15);
+}
+
+.blessing-tap-hint {
+  font-size: 12px;
   color: rgba(255, 211, 106, 0.7);
 }
 
@@ -1298,6 +1414,21 @@ button {
   margin-top: 30px;
   font-size: 13px;
   color: rgba(255, 211, 106, 0.65);
+}
+
+/* Wall Art Banner */
+.wall-art-banner {
+  width: 100%;
+  overflow: visible;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 2;
+}
+.wall-art-svg {
+  width: 100%;
+  height: 110px;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(255, 211, 106, 0.45));
 }
 
 /* Empty State */
@@ -1686,7 +1817,7 @@ button {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .game-topbar {
@@ -1975,6 +2106,407 @@ button {
   gap: 12px;
   color: var(--diya-gold);
   font-weight: 600;
+}
+
+/* ==========================================================================
+   Fan-style Opponent Hands (reference image technique)
+   ========================================================================== */
+
+/* ==========================================================================
+   Fan-style Opponent Hands (reference image technique)
+   ========================================================================== */
+
+/* Opponent Fan Hand Stack (Reference image style) */
+.opponent-fanned-hand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opponent-fan-cards-wrap {
+  position: relative;
+  width: 90px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opponent-fan-north .opponent-fan-cards-wrap {
+  width: 140px;
+  height: 54px;
+}
+
+.opponent-fan-west .opponent-fan-cards-wrap,
+.opponent-fan-east .opponent-fan-cards-wrap {
+  width: 76px;
+  height: 80px;
+}
+
+.opponent-fan-card-item {
+  position: absolute;
+  width: 38px;
+  height: 54px;
+  border-radius: 5px;
+  box-shadow: -1px 3px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+
+/* Red patterned back like traditional playing card decks shown in reference */
+.fan-card-red-back {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, #B91C1C 0%, #881337 70%, #4C0519 100%);
+  border: 1.5px solid #FDE68A;
+  border-radius: 5px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.fan-card-filigree {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(254, 240, 138, 0.5);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.08) 2px,
+    rgba(255, 255, 255, 0.08) 4px
+  );
+}
+
+.fan-card-symbol {
+  font-size: 11px;
+  filter: drop-shadow(0 0 2px #FFD700);
+}
+
+/* Card count pill */
+.opponent-fan-count-pill {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #111827;
+  border: 1px solid #F59E0B;
+  color: #FDE68A;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 99px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  z-index: 20;
+}
+
+/* South hand non-wrapping overlapping layout to eliminate inner scroll */
+.south-hand {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+  flex-wrap: nowrap;
+  padding-top: 4px;
+  max-width: 100%;
+}
+
+.south-hand .playing-card {
+  margin-left: -14px;
+  transition: transform 0.2s ease, margin 0.2s ease, z-index 0.2s ease;
+}
+
+.south-hand .playing-card:first-child {
+  margin-left: 0;
+}
+
+.south-hand .playing-card:hover {
+  transform: translateY(-16px) scale(1.08);
+  z-index: 40 !important;
+  margin-right: 6px;
+}
+
+/* Marriage hand tray compact single-line fit */
+.marriage-hand-tray {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow-x: visible;
+  padding: 6px 0 10px;
+  gap: 0;
+  flex-wrap: nowrap;
+  max-width: 100%;
+}
+
+.marriage-hand-tray .playing-card {
+  margin-left: -34px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, z-index 0.2s ease;
+}
+
+.marriage-hand-tray .playing-card:first-child {
+  margin-left: 0;
+}
+
+.marriage-hand-tray .playing-card:hover {
+  transform: translateY(-20px) scale(1.12);
+  z-index: 50 !important;
+}
+
+/* Container for a fanned hand */
+.fan-hand {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* North fan: horizontal spread of overlapping face-down cards */
+.fan-hand.fan-north {
+  height: 56px;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.fan-hand.fan-north .fan-card {
+  position: absolute;
+  width: 36px;
+  height: 52px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1854 50%, #1a0a2e 100%);
+  border: 1.5px solid rgba(255,211,106,0.4);
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.6);
+  transform-origin: bottom center;
+}
+
+/* West fan: fanned to the right, spread vertically */
+.fan-hand.fan-west {
+  width: 56px;
+  height: 160px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fan-hand.fan-west .fan-card {
+  position: absolute;
+  width: 36px;
+  height: 52px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1854 50%, #1a0a2e 100%);
+  border: 1.5px solid rgba(255,211,106,0.4);
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.6);
+  transform-origin: center right;
+}
+
+/* East fan: mirror of West */
+.fan-hand.fan-east {
+  width: 56px;
+  height: 160px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fan-hand.fan-east .fan-card {
+  position: absolute;
+  width: 36px;
+  height: 52px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1854 50%, #1a0a2e 100%);
+  border: 1.5px solid rgba(255,211,106,0.4);
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.6);
+  transform-origin: center left;
+}
+
+/* Diya mandala on card backs */
+.fan-card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* New screen-fit table layout: 3 rows strict */
+.table-felt-screenfit {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 50%, #15533A 0%, #0d3d2a 60%, #061A11 100%);
+  border: 6px solid #92400E;
+  outline: 2px solid #D97706;
+  outline-offset: -10px;
+  border-radius: 24px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  gap: 6px;
+  padding: 12px;
+  height: min(76vh, 680px);
+  overflow: hidden;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
+}
+
+/* North row spans full width */
+.table-slot-north {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* West side */
+.table-slot-west {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Center: trick/piles area */
+.table-slot-center {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* East side */
+.table-slot-east {
+  grid-column: 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* South: full-width bottom */
+.table-slot-south {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+/* Compact player badge for new layout */
+.player-badge-compact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,211,106,0.25);
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: rgba(255,241,214,0.85);
+  white-space: nowrap;
+}
+
+.player-badge-compact.active-badge {
+  border-color: var(--diya-gold);
+  background: rgba(255,211,106,0.15);
+  box-shadow: 0 0 10px rgba(255,211,106,0.4);
+}
+
+/* South fanned hand: tight overlap for 13 cards */
+.south-fan-hand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  height: 90px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.south-fan-card {
+  position: absolute;
+  transform-origin: bottom center;
+  transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+  cursor: pointer;
+}
+
+.south-fan-card:hover {
+  z-index: 50 !important;
+}
+
+/* Dhumbal 5-card south hand */
+.south-fan-hand.dhumbal-hand {
+  height: 80px;
+  gap: 0;
+}
+
+/* Marriage 21-card south hand — tighter overlap */
+.south-fan-hand.marriage-hand {
+  height: 90px;
+  max-width: 800px;
+}
+
+/* Trick compass zone */
+.trick-compass {
+  position: relative;
+  width: 200px;
+  height: 180px;
+}
+
+.trick-compass .compass-card {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.trick-compass .compass-card.north-card  { top: 15%; left: 50%; }
+.trick-compass .compass-card.west-card   { top: 50%; left: 15%; }
+.trick-compass .compass-card.east-card   { top: 50%; left: 85%; }
+.trick-compass .compass-card.south-card  { top: 85%; left: 50%; }
+
+.trick-compass .compass-label {
+  position: absolute;
+  font-size: 9px;
+  color: rgba(255,211,106,0.5);
+  pointer-events: none;
+}
+
+.trick-compass .compass-label.north-label { top: 2%; left: 50%; transform: translateX(-50%); }
+.trick-compass .compass-label.west-label  { top: 50%; left: 2%; transform: translateY(-50%); }
+.trick-compass .compass-label.east-label  { top: 50%; right: 2%; transform: translateY(-50%); }
+.trick-compass .compass-label.south-label { bottom: 2%; left: 50%; transform: translateX(-50%); }
+
+/* Dhumbal/Marriage center piles compact */
+.piles-compact {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.pile-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.pile-compact .pile-label-sm {
+  font-size: 10px;
+  color: rgba(255,211,106,0.7);
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -5317,4 +5849,132 @@ button {
 /* Tactile Click Press */
 .desktop-nav .nav-item-link:active {
   transform: scale(0.96);
+}
+
+/* ==========================================================================
+   Unique Thematic Identities for Each Page
+   ========================================================================== */
+
+.page-container {
+  min-height: 100vh;
+  position: relative;
+  transition: background 0.4s ease;
+}
+
+/* 1. Virtual Diyo Wall Page (Deep Starlit Violet & Midnight Gold) */
+.page-container.wall-page {
+  background: radial-gradient(circle at 50% 10%, #2A123D 0%, #170A24 45%, #0B0413 100%);
+}
+.page-container.wall-page .page-breadcrumb-banner {
+  background: rgba(42, 18, 61, 0.7);
+  border-bottom: 1px solid rgba(255, 211, 106, 0.35);
+  box-shadow: 0 4px 20px rgba(255, 211, 106, 0.08);
+}
+
+/* 2. About Tihar Page (Sacred Vedic Saffron & Temple Crimson) */
+.page-container.about-tihar-page {
+  background: radial-gradient(circle at 50% 10%, #3D1308 0%, #220803 50%, #0D0301 100%);
+}
+.page-container.about-tihar-page .page-breadcrumb-banner {
+  background: rgba(61, 19, 8, 0.7);
+  border-bottom: 1px solid rgba(249, 115, 22, 0.35);
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.08);
+}
+.page-container.about-tihar-page .banner-badge-pill {
+  border-color: #F97316;
+  color: #FDBA74;
+  background: rgba(249, 115, 22, 0.12);
+}
+
+/* 3. Kukur Tihar Tribute Page (Warm Earth Amber & Loving Rose) */
+.page-container.kukur-tribute-page {
+  background: radial-gradient(circle at 50% 10%, #3A101C 0%, #200710 50%, #0D0206 100%);
+}
+.page-container.kukur-tribute-page .page-breadcrumb-banner {
+  background: rgba(58, 16, 28, 0.7);
+  border-bottom: 1px solid rgba(244, 63, 94, 0.35);
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.08);
+}
+.page-container.kukur-tribute-page .banner-badge-pill {
+  border-color: #F43F5E;
+  color: #FDA4AF;
+  background: rgba(244, 63, 94, 0.12);
+}
+
+/* 4. Rangoli & Mandala Studio Page (Prismatic Peacock Teal & Emerald) */
+.page-container.rangoli-page {
+  background: radial-gradient(circle at 50% 10%, #062D2B 0%, #031918 50%, #010A0A 100%);
+}
+.page-container.rangoli-page .page-breadcrumb-banner {
+  background: rgba(6, 45, 43, 0.7);
+  border-bottom: 1px solid rgba(20, 184, 166, 0.35);
+  box-shadow: 0 4px 20px rgba(20, 184, 166, 0.08);
+}
+.page-container.rangoli-page .banner-badge-pill {
+  border-color: #14B8A6;
+  color: #5EEAD4;
+  background: rgba(20, 184, 166, 0.12);
+}
+
+/* 5. Deusi-Bhailo Studio Page (Festive Folk Marigold & Fire Gold) */
+.page-container.deusi-page {
+  background: radial-gradient(circle at 50% 10%, #351C03 0%, #1E0F01 50%, #0C0600 100%);
+}
+.page-container.deusi-page .page-breadcrumb-banner {
+  background: rgba(53, 28, 3, 0.7);
+  border-bottom: 1px solid rgba(234, 179, 8, 0.35);
+  box-shadow: 0 4px 20px rgba(234, 179, 8, 0.08);
+}
+.page-container.deusi-page .banner-badge-pill {
+  border-color: #EAB308;
+  color: #FEF08A;
+  background: rgba(234, 179, 8, 0.12);
+}
+
+/* 6. Chhath Puja Mahaparva Page (Dawn Sunburst Orange & Holy River Teal) */
+.page-container.chhath-page {
+  background: radial-gradient(circle at 50% 10%, #2A1504 0%, #150A1C 50%, #080311 100%);
+}
+.page-container.chhath-page .page-breadcrumb-banner {
+  background: rgba(42, 21, 4, 0.7);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.08);
+}
+.page-container.chhath-page .banner-badge-pill {
+  border-color: #F59E0B;
+  color: #FDE68A;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+/* 7. Games Hub & Dedicated Arena Pages (Velvet Card Felt & Mahogony Wood) */
+.page-container.games-hub-page,
+.page-container.dedicated-game-page {
+  background: radial-gradient(circle at 50% 10%, #0A2E1D 0%, #061910 50%, #020A06 100%);
+}
+.page-container.games-hub-page .page-breadcrumb-banner,
+.page-container.dedicated-game-page .page-breadcrumb-banner {
+  background: rgba(10, 46, 29, 0.75);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+}
+.page-container.games-hub-page .banner-badge-pill,
+.page-container.dedicated-game-page .banner-badge-pill {
+  border-color: #10B981;
+  color: #6EE7B7;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+/* 8. Statistics Analytics Page (Royal Indigo & Cosmic Gold) */
+.page-container.stats-page {
+  background: radial-gradient(circle at 50% 10%, #17183B 0%, #0C0D22 50%, #040410 100%);
+}
+.page-container.stats-page .page-breadcrumb-banner {
+  background: rgba(23, 24, 59, 0.7);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
+}
+.page-container.stats-page .banner-badge-pill {
+  border-color: #6366F1;
+  color: #A5B4FC;
+  background: rgba(99, 102, 241, 0.12);
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PlayingCard from '../shared/PlayingCard';
+import OpponentFanHand from '../shared/OpponentFanHand';
 import {
   PLAYERS,
   PLAYER_INFO,
@@ -261,11 +262,7 @@ export default function CallBreakGame({ onClose }) {
                 </span>
               </div>
             </div>
-            <div className="opponent-hand horizontal">
-              {hands.north.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="north" count={hands.north.length} />
           </div>
 
           {/* West Opponent */}
@@ -279,11 +276,7 @@ export default function CallBreakGame({ onClose }) {
                 </span>
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.west.slice(0, 7).map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="west" count={hands.west.length} />
           </div>
 
           {/* Center Trick Arena */}
@@ -320,11 +313,7 @@ export default function CallBreakGame({ onClose }) {
                 </span>
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.east.slice(0, 7).map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
+            <OpponentFanHand position="east" count={hands.east.length} />
           </div>
 
           {/* South (Human Player) */}
