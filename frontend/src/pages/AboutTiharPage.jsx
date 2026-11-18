@@ -13,7 +13,7 @@ export default function AboutTiharPage() {
             <span className="current">About Yamapanchak</span>
           </div>
           <div className="banner-badge-pill">
-            <span>🏵️ The 5 Auspicious Days of Tihar</span>
+            <span> The 5 Auspicious Days of Tihar</span>
           </div>
         </div>
       </div>

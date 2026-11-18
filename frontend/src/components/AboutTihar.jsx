@@ -11,7 +11,7 @@ export default function AboutTihar() {
       {/* Section Header */}
       <div className="section-header-centered">
         <div className="festive-pill-badge">
-          <span>🏵️</span>
+          <span></span>
           <span>यमपञ्चक • The Festival of Lights & Kinship</span>
         </div>
 
@@ -39,7 +39,14 @@ export default function AboutTihar() {
             }}
           >
             <span className="day-number">Day {dayObj.day}</span>
-            <span className="day-symbol-emoji">{dayObj.symbol}</span>
+            {dayObj.image ? (
+              <img
+                src={dayObj.image}
+                alt={dayObj.nameEn}
+                className="day-symbol-img my-1.5 h-12 w-12 rounded-full object-cover border-2 border-amber-400/50 shadow-md"
+              />
+            ) : (
+            <span className="day-symbol-emoji">{dayObj.symbol}</span>)}
             <span className="day-name-en">{dayObj.nameEn}</span>
             <span className="day-name-ne">{dayObj.nameNe}</span>
           </button>
@@ -47,12 +54,30 @@ export default function AboutTihar() {
       </div>
 
       {/* Featured Editorial Day Showcase */}
-      <div className="editorial-day-feature-card">
+      
+      <div className="editorial-day-feature-card relative overflow-hidden bg-cover bg-center transition-all duration-500"
+        style={
+          currentDay.image
+            ? {
+                backgroundImage: `linear-gradient(to right, rgba(18, 14, 28, 0.92), rgba(18, 14, 28, 0.78)), url(${currentDay.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center 25%",
+                backgroundRepeat: "no-repeat",
+              }
+            : undefined
+        }>
         <div className="feature-card-grid">
           {/* Left Column: Visual & Sacred Rituals */}
           <div className="feature-visual-panel">
-            <div className="day-visual-badge">
-              <span className="large-symbol-icon">{currentDay.symbol}</span>
+            <div className="day-visual-badge relative overflow-hidden">
+              {currentDay.image ? (
+                <img
+                  src={currentDay.image}
+                  alt={currentDay.nameEn}
+                  className="large-symbol-img h-full w-full rounded-full object-cover"
+                />
+              ) : (
+              <span className="large-symbol-icon">{currentDay.symbol}</span>)}
               <div className="visual-halo-glow" />
             </div>
 

@@ -198,6 +198,10 @@ export default function DiyaWall({
                 className="mosaic-card-item"
                 onClick={() => onSelectDiya(diya)}
               >
+                {/* Uiverse animated border */}
+                <div className="mosaic-card-border" />
+
+                {/* Top: author + location */}
                 <div className="card-top-meta">
                   <div className="meta-left">
                     <span className="mini-flame">🪔</span>
@@ -216,10 +220,12 @@ export default function DiyaWall({
                   </div>
                 )}
 
+                {/* Main wish message */}
                 <p className="card-wish-quote">"{diya.wish}"</p>
 
+                {/* Bottom: type + like (reveals on hover) */}
                 <div className="card-bottom-actions">
-                  <span className="card-diya-badge">{diya.diyaType}</span>
+                  <span className="card-diya-badge">🪔 {diya.diyaType}</span>
                   <button
                     type="button"
                     className="card-heart-btn"
@@ -231,6 +237,9 @@ export default function DiyaWall({
                     {likedDiyaIds.has(diya.id) ? '❤️' : '🤍'} {(diya.likes || 0) + (likedDiyaIds.has(diya.id) ? 1 : 0)}
                   </button>
                 </div>
+
+                {/* Click hint — fades in on hover */}
+                <span className="mosaic-card-hint">Click for full blessing ✨</span>
               </div>
             ))}
           </div>

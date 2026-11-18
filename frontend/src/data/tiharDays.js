@@ -9,6 +9,7 @@ export const TIHAR_DAYS = [
     title: "Worship of Crows — The Messengers of Yamaraj",
     tithi: "Trayodashi (त्रयोदशी)",
     symbol: "🐦‍⬛",
+    image: "/images/crow.png",
     tagline: "Honoring nature's messengers with sweet grains and prayers",
     description: "On the first day of Tihar, crows and ravens are honored. In Hindu and Nepali mythology, the crow is revered as the messenger of Yamaraj, the God of Death. Families place offerings of freshly cooked rice, sweets, fruits, and bread on their rooftops and open courtyards early in the morning before breakfast, praying that sadness, grief, and grief-bearing news stay far away from their homes.",
     rituals: [
@@ -25,6 +26,7 @@ export const TIHAR_DAYS = [
     title: "Day of Dogs — Honoring Loyalty and Guardianship",
     tithi: "Chaturdashi (चतुर्दशी)",
     symbol: "🐕",
+    image: "/images/dog.png",
     tagline: "Adorning humankind's most faithful companion with garlands and tika",
     description: "Kukur Tihar is one of the most beloved and internationally cherished celebrations in the world. On this day, all dogs—both cherished household pets and community street dogs—are adorned with bright golden marigold garlands (Sayapatri mala) and red vermilion tika on their foreheads. They are served delicious feasts of meat, eggs, milk, and sweet treats. In the Mahabharata, a dog guided King Yudhishthira to the gates of heaven, symbolizing undying righteousness and eternal loyalty.",
     rituals: [
@@ -42,6 +44,7 @@ export const TIHAR_DAYS = [
     title: "The Night of Lights & Goddess of Wealth",
     tithi: "Amavasya (औंसी - New Moon)",
     symbol: "🪔",
+    image: "/images/cow.png",
     tagline: "Thousands of diyos illuminate the darkest night of the year",
     description: "The crown jewel of Tihar. In the morning, the sacred cow (Gai), symbolizing Mother Earth and abundance, is worshipped with marigold garlands, tika, and green grass. As dusk falls, homes across Nepal are meticulously cleansed, decorated with marigold torans, and vibrant Rangoli (mandala) patterns crafted at the threshold. From the front door into the puja room, small red footprints are painted with vermilion to welcome Goddess Laxmi. At night, hundreds of oil lamps (diyos) and twinkling fairy lights illuminate every window, rooftop, and verandah. Young girls gather to begin the joyous musical tradition of Bhailo ('भैलेनी आयो आँगन, बरी लै!').",
     rituals: [
@@ -60,6 +63,7 @@ export const TIHAR_DAYS = [
     title: "Celebration of Oxen, Earth, & The Sacred Inner Self",
     tithi: "Pratipada (प्रतिपदा - New Year)",
     symbol: "🐂",
+    image: "/images/tihar.png",
     tagline: "Honoring agricultural companions and the divine spirit within",
     description: "The fourth day carries diverse, profound traditions. In agricultural households, oxen (Goru) are worshipped with garlands and thanked for plowing the fertile fields. A mound of cow dung representing Mount Govardhan is worshipped, honoring Lord Krishna lifting the mountain to shelter villagers from torrential storms. For the Newar community, this evening marks 'Mha Puja' (worship of oneself)—a sacred ritual of purifying and rejuvenating the body and soul for the coming year, coinciding with the start of the historic Nepal Sambat calendar. In the evening, boys and men form Deusi troupes ('देउसीरे!'), singing heroic verses from house to house.",
     rituals: [
@@ -77,6 +81,7 @@ export const TIHAR_DAYS = [
     title: "The Eternal Bond of Brothers and Sisters",
     tithi: "Dwitiya (द्वितीया)",
     symbol: "🏵️",
+    image: "/images/bhaiTika.png",
     tagline: "Seven-colored tika, Makhamali garlands, and vows of lifelong protection",
     description: "The heartwarming culmination of Tihar. Sisters pray to Yamaraj for the long life, vitality, and prosperity of their brothers. A protective circle of mustard oil and holy water is drawn on the floor around the brother so that Yamaraj cannot harm him. Sisters apply the iconic 'Saptarangi Tika' (seven vibrant colors: red, orange, yellow, green, blue, indigo, and white) on their brothers' foreheads and place a long-lasting Makhamali (Globe Amaranth) flower garland around their necks—a flower that never wilts, symbolizing eternal love. Sisters gift a sumptuous box of dry fruits, nuts, sweets, and Sel Roti, while brothers bow in reverence and present gifts and heartfelt blessings.",
     rituals: [
