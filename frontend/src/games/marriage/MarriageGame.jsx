@@ -21,7 +21,7 @@ export default function MarriageGame({ onClose }) {
   const [statusMessage, setStatusMessage] = useState('Draw 1 card from the Closed Deck or Discard Pile.');
   const [winner, setWinner] = useState(null);
   const [showRules, setShowRules] = useState(false);
-  const [sortMode, setSortMode] = useState('suit'); // 'suit' | 'rank'
+  const [sortMode, setSortMode] = useState('suit');
 
   const startNewGame = () => {
     const fullDeck = shuffle(createTripleDeck());
@@ -45,7 +45,6 @@ export default function MarriageGame({ onClose }) {
     startNewGame();
   }, []);
 
-  // Sort human hand
   const handleSort = (mode) => {
     setSortMode(mode);
     soundManager.playCardPlay();
@@ -56,7 +55,6 @@ export default function MarriageGame({ onClose }) {
     }
   };
 
-  // Human draws card
   const handleUserDraw = (source) => {
     if (currentTurn !== 'south' || turnStep !== 'draw') return;
 
@@ -83,17 +81,15 @@ export default function MarriageGame({ onClose }) {
     setDiscardPile(newDiscard);
     setHands(prev => ({ ...prev, south: newSouth }));
     setTurnStep('discard');
-    setStatusMessage('Select 1 card from your 22 cards to discard.');
+    setStatusMessage('Select 1 card from your hand to discard.');
   };
 
-  // Human selects card to discard
   const handleSelectCard = (card) => {
     if (currentTurn !== 'south' || turnStep !== 'discard') return;
     soundManager.playCardPlay();
     setSelectedCard(card === selectedCard ? null : card);
   };
 
-  // Human executes discard
   const handleUserDiscard = () => {
     if (!selectedCard) {
       setStatusMessage('Please click a card from your hand to discard.');
@@ -109,18 +105,10 @@ export default function MarriageGame({ onClose }) {
     setSelectedCard(null);
     setTurnStep('draw');
 
-    // Check if south declared
-    const analysis = analyzeMarriageHand(newHand);
-    if (analysis.totalValidMelds >= 3) {
-      // Can declare!
-    }
-
-    // Pass turn to East
     setCurrentTurn('east');
     setStatusMessage('Sita is taking her turn...');
   };
 
-  // Human declares Show / Win
   const handleDeclareShow = () => {
     const analysis = analyzeMarriageHand(hands.south);
     if (analysis.totalValidMelds >= 3) {
@@ -140,12 +128,10 @@ export default function MarriageGame({ onClose }) {
       const aiHand = hands[currentTurn];
       if (!aiHand || aiHand.length === 0) return;
 
-      // Draw from deck
       let newDeck = [...deck];
       const drawn = newDeck[0] || '10♠';
       newDeck = newDeck.slice(1);
 
-      // Discard a random card not part of pure sequence
       const discarded = aiHand[Math.floor(Math.random() * aiHand.length)];
       const updatedHand = aiHand.filter(c => c !== discarded);
 
@@ -158,7 +144,6 @@ export default function MarriageGame({ onClose }) {
 
       soundManager.playCardPlay();
 
-      // Check if AI randomly completes
       const aiAnalysis = analyzeMarriageHand(updatedHand);
       if (aiAnalysis.totalValidMelds >= 4) {
         soundManager.playTrickWon();
@@ -167,7 +152,6 @@ export default function MarriageGame({ onClose }) {
         return;
       }
 
-      // Next player
       if (currentTurn === 'east') {
         setCurrentTurn('west');
         setStatusMessage('Biraj is taking his turn...');
@@ -176,7 +160,7 @@ export default function MarriageGame({ onClose }) {
         setTurnStep('draw');
         setStatusMessage('Your turn! Draw 1 card from the Deck or Discard pile.');
       }
-    }, 1000);
+    }, 900);
 
     return () => clearTimeout(timer);
   }, [currentTurn, hands, deck, discardPile, winner]);
@@ -200,7 +184,7 @@ export default function MarriageGame({ onClose }) {
             🔄 New Game
           </button>
           {onClose && (
-            <button className="btn-icon btn-close" onClick={onClose}>
+            <button className="btn-icon btn-close" onClick={onClose} title="Back to Games">
               ✕
             </button>
           )}
@@ -215,9 +199,9 @@ export default function MarriageGame({ onClose }) {
             <ul>
               <li>Played with <strong>3 decks (156 cards)</strong>. 3 players receive 21 cards each.</li>
               <li><strong>Objective:</strong> Group 21 cards into Pure Runs and Tunnellas.</li>
-              <li><strong>Pure Run:</strong> 3 or more consecutive cards of the exact same suit (e.g. 7♦ 8♦ 9♦).</li>
+              <li><strong>Pure Run:</strong> 3 or more consecutive cards of exact same suit (e.g. 7♦ 8♦ 9♦).</li>
               <li><strong>Tunnella:</strong> 3 identical cards (same rank and same suit, e.g. Q♠ Q♠ Q♠).</li>
-              <li>Draw 1 card from the deck or discard pile, then discard 1 card.</li>
+              <li>Draw 1 card from deck or discard pile, then discard 1 card.</li>
               <li>When you have at least <strong>3 valid melds</strong>, hit <strong>Declare Show</strong>!</li>
             </ul>
             <button className="btn-primary" onClick={() => setShowRules(false)}>
@@ -227,10 +211,10 @@ export default function MarriageGame({ onClose }) {
         </div>
       )}
 
-      {/* Game Table */}
+      {/* Screen-Fit Table */}
       <div className="card-table marriage-table">
-        <div className="table-felt">
-          {/* Opponents Row */}
+        <div className="table-felt felt-screen-fit marriage-felt">
+          {/* Opponents & Piles Middle Row */}
           <div className="marriage-opponents-row">
             {/* Sita (East) */}
             <div className={`marriage-opponent ${currentTurn === 'east' ? 'active-turn' : ''}`}>
@@ -250,7 +234,7 @@ export default function MarriageGame({ onClose }) {
                   className={`card-deck-stack ${currentTurn === 'south' && turnStep === 'draw' ? 'clickable-pile' : ''}`}
                   onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('deck')}
                 >
-                  <PlayingCard isFaceDown />
+                  <PlayingCard isFaceDown small />
                 </div>
               </div>
 
@@ -262,7 +246,7 @@ export default function MarriageGame({ onClose }) {
                   onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('discard')}
                 >
                   {discardPile.length > 0 ? (
-                    <PlayingCard card={discardPile[0]} pop />
+                    <PlayingCard card={discardPile[0]} pop small />
                   ) : (
                     <div className="empty-pile">Empty</div>
                   )}
@@ -280,7 +264,7 @@ export default function MarriageGame({ onClose }) {
             </div>
           </div>
 
-          {/* South Dashboard */}
+          {/* South Dashboard & Fanned 21-Card Hand */}
           <div className="marriage-south-panel">
             <div className="marriage-meld-stats">
               <div className="stats-badges">
@@ -291,7 +275,7 @@ export default function MarriageGame({ onClose }) {
                   💎 Tunnellas: <strong>{southAnalysis.tunnellas.length}</strong>
                 </span>
                 <span className="meld-badge highlight">
-                  Total Melds: <strong>{southAnalysis.totalValidMelds} / 3 needed</strong>
+                  Melds: <strong>{southAnalysis.totalValidMelds} / 3 needed</strong>
                 </span>
               </div>
 
@@ -300,13 +284,13 @@ export default function MarriageGame({ onClose }) {
                   className={`btn-sort ${sortMode === 'suit' ? 'active' : ''}`}
                   onClick={() => handleSort('suit')}
                 >
-                  ♠ Sort by Suit
+                  ♠ Sort Suit
                 </button>
                 <button
                   className={`btn-sort ${sortMode === 'rank' ? 'active' : ''}`}
                   onClick={() => handleSort('rank')}
                 >
-                  🔢 Sort by Rank
+                  🔢 Sort Rank
                 </button>
 
                 {currentTurn === 'south' && turnStep === 'discard' && (
@@ -330,18 +314,25 @@ export default function MarriageGame({ onClose }) {
               </div>
             </div>
 
-            {/* 21 Cards Hand */}
-            <div className="marriage-hand-tray">
+            {/* Overlapping Fanned 21 Cards Rack (Screen-Fit) */}
+            <div className="marriage-cards-fanned-rack">
               {hands.south.map((card, idx) => {
                 const isSelected = selectedCard === card;
                 return (
-                  <PlayingCard
+                  <div
                     key={`${card}-${idx}`}
-                    card={card}
-                    selected={isSelected}
-                    onClick={() => handleSelectCard(card)}
-                    className="marriage-fan-card"
-                  />
+                    className={`marriage-fanned-card-slot ${isSelected ? 'is-selected' : ''}`}
+                    style={{
+                      zIndex: isSelected ? 40 : idx + 1
+                    }}
+                  >
+                    <PlayingCard
+                      card={card}
+                      selected={isSelected}
+                      onClick={() => handleSelectCard(card)}
+                      small
+                    />
+                  </div>
                 );
               })}
             </div>
@@ -349,7 +340,7 @@ export default function MarriageGame({ onClose }) {
         </div>
 
         {/* Status bar */}
-        <div className="game-status-footer">
+        <div className="game-status-footer compact-footer">
           <div className="status-announcer">
             <span className="flame-dot">🪔</span>
             <span>{statusMessage}</span>

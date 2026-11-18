@@ -7,7 +7,7 @@
 
 ## 📌 Project Abstract (For Competition Google Form Submission)
 
-> **JHILIMILI (झिलिमिली)** is an immersive, multi-page interactive Web Application celebrating Nepal’s twin festivals of **Tihar (Deepawali/Yamapanchak)** and **Chhath Puja (छठ महापर्व)**. Featuring dedicated URL routes, it includes an interactive **Virtual Diyo Wall** with global diaspora wishes, three fully playable **Traditional Nepali Card Games** (Call Break, Dhumbal/Jhyap, and Marriage) on dedicated table routes, a real-time radial symmetry **Rangoli & Mandala Studio**, a sacred **Chhath Ghat Locator with Virtual Arghya Offerings**, an interactive **Madal Drum & Deusi-Bhailo Jam Corner**, and a **Kukur Tihar Tribute Gallery**—all backed by a custom Web Audio synthesizer and resilient Node/Express API.
+> **JHILIMILI (झिलिमिली)** is an immersive, multi-page interactive Web Application celebrating Nepal’s twin festivals of **Tihar (Deepawali/Yamapanchak)** and **Chhath Puja (छठ महापर्व)**. Featuring dedicated URL routes, it includes an interactive **Virtual Diyo Wall** with global diaspora wishes, three screen-fit **Traditional Nepali Card Games** (Call Break, Dhumbal/Jhyap, and Marriage) on dedicated table routes, a real-time radial symmetry **Rangoli & Mandala Studio**, a sacred **Chhath Ghat Locator with Virtual Arghya Offerings**, and a **Kukur Tihar Tribute Gallery**—all backed by a custom Web Audio synthesizer and resilient Node/Express API.
 
 ---
 
@@ -20,12 +20,11 @@ The application features full multi-page client-side routing with distinct URLs,
 | **`/`** | **Home / Gateway** | Grand Hero Section, 3D Diya, Live Counter, Gateway Cards to all festival rooms, and recent wishes strip |
 | **`/wall`** | **Virtual Diyo Wall** | Full-page Diyo Wall with Starlit Courtyard & Mosaic Cards views, search, filters, and "Light a Diya" modal |
 | **`/games`** | **Games of Tihar Lounge** | Traditional card games arcade hub with cultural history and direct launch buttons |
-| **`/games/callbreak`** | **Call Break Arena** | Dedicated full-table Call Break game with bidding, trick arena, AI opponents, and scoring |
+| **`/games/callbreak`** | **Call Break Arena** | Dedicated full-table Call Break game with bidding, compass trick arena, AI opponents, and scoring |
 | **`/games/dhumbal`** | **Dhumbal / Jhyap Arena** | Dedicated table for 4 players with draw/discard piles, live hand point calculation, and DHUMBAL call |
 | **`/games/marriage`** | **21-Card Marriage Arena** | Dedicated 3-player 21-card tray with Sort by Suit/Rank and live Pure Run & Tunnella detection |
 | **`/rangoli`** | **Rangoli & Mandala Studio** | Interactive canvas with 4–12 fold radial symmetry, festival pigments, stamps, and PNG download |
 | **`/chhath`** | **Chhath Puja Mahaparva** | The 4 Sacred Days, Sacred Ghat Locator for 6 major ghats, and Virtual Arghya Offering |
-| **`/deusi-jam`** | **Deusi-Bhailo Rhythm Jam** | Interactive Madal drum pads (Dhin, Tak, Khinta), folk rhythm loops, and rhyming Deusi couplets |
 | **`/kukur-tribute`** | **Kukur Tihar Tribute** | Pet Hall of Fame with interactive marigold garland draping, vermilion tika, and pet submission form |
 | **`/about-tihar`** | **About Yamapanchak** | Editorial guide to the 5 Days of Tihar, lunar tithis, sacred rituals, and cultural symbols |
 | **`/stats`** | **Celebration Pulse** | Live community metrics, global diaspora reach across 64+ nations, and regional distribution |

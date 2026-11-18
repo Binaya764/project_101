@@ -13,7 +13,7 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       url: "/wall",
       icon: "🪔",
       badge: "Main Highlight",
-      desc: "Hundreds of glowing diyos carrying heartfelt prayers from Kathmandu to New York, Sydney, and London.",
+      desc: "Hundreds of glowing diyos carrying heartfelt prayers from Kathmandu to Sydney, London, and New York.",
       actionText: "Enter the Wall →"
     },
     {
@@ -21,8 +21,8 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       nepali: "तिहारका तास",
       url: "/games",
       icon: "🎴",
-      badge: "3 Playable Games",
-      desc: "Play Call Break, Dhumbal (Jhyap), and 21-card Marriage against intelligent AI opponents at a traditional felt table.",
+      badge: "3 Card Games",
+      desc: "Play Call Break, Dhumbal (Jhyap), and 21-card Marriage against intelligent AI opponents at a traditional table.",
       actionText: "Play Games →"
     },
     {
@@ -42,15 +42,6 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       badge: "Ghats & Arghya",
       desc: "Explore Nepal's sacred Chhath Ghats, learn the 4-day rituals, and offer virtual Arghya with holy prasad to Lord Surya.",
       actionText: "Explore Chhath →"
-    },
-    {
-      title: "Deusi-Bhailo Rhythm Jam",
-      nepali: "देउसी-भैलो धुन",
-      url: "/deusi-jam",
-      icon: "🪘",
-      badge: "Madal Drum Pad",
-      desc: "Tap live Madal drum hits (Dhin, Tak, Khinta), groove to folk loops, and generate rhyming Deusi couplets.",
-      actionText: "Start Jamming →"
     },
     {
       title: "Kukur Tihar Tribute",

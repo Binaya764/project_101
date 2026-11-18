@@ -16,7 +16,6 @@ import DhumbalPage from './pages/DhumbalPage';
 import MarriagePage from './pages/MarriagePage';
 import RangoliPage from './pages/RangoliPage';
 import ChhathPage from './pages/ChhathPage';
-import DeusiPage from './pages/DeusiPage';
 import KukurTributePage from './pages/KukurTributePage';
 import AboutTiharPage from './pages/AboutTiharPage';
 import StatsPage from './pages/StatsPage';
@@ -110,7 +109,7 @@ function AppContent() {
       {/* Hanging Golden Fairy Lights across page top */}
       <FairyLights />
 
-      {/* Glassmorphism Navigation Bar with Distinct Page Links */}
+      {/* Glassmorphism Navigation Bar */}
       <Navbar
         onOpenLightModal={() => setIsLightModalOpen(true)}
         soundEnabled={soundEnabled}
@@ -120,7 +119,7 @@ function AppContent() {
       {/* Multi-Page Route Viewports */}
       <main className="main-content-flow">
         <Routes>
-          {/* Home Page (Overview & Gateway) */}
+          {/* Home Page */}
           <Route
             path="/"
             element={
@@ -162,9 +161,6 @@ function AppContent() {
           {/* Chhath Puja Mahaparva & Ghats Page */}
           <Route path="/chhath" element={<ChhathPage />} />
 
-          {/* Deusi-Bhailo Rhythm Jam Page */}
-          <Route path="/deusi-jam" element={<DeusiPage />} />
-
           {/* Kukur Tihar Loyal Companion Tribute Page */}
           <Route path="/kukur-tribute" element={<KukurTributePage />} />
 
@@ -179,7 +175,7 @@ function AppContent() {
         </Routes>
       </main>
 
-      {/* Cultural Footer */}
+      {/* Cultural Footer without pages list */}
       <Footer onOpenLightModal={() => setIsLightModalOpen(true)} />
 
       {/* "Light a Diya" Modal Dialog */}

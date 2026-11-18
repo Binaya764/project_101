@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from '../router/Router';
 
 export default function Footer({ onOpenLightModal }) {
   return (
@@ -9,7 +8,7 @@ export default function Footer({ onOpenLightModal }) {
         <div className="wood-carving-strip" />
       </div>
 
-      <div className="footer-container">
+      <div className="footer-container balanced-footer">
         {/* Brand & Mission */}
         <div className="footer-brand-column">
           <div className="footer-brand-header">
@@ -27,34 +26,18 @@ export default function Footer({ onOpenLightModal }) {
           </div>
         </div>
 
-        {/* Quick Nav Links */}
-        <div className="footer-nav-column">
-          <h4 className="footer-col-heading">Pages & Exploration</h4>
-          <ul className="footer-links-list">
-            <li><Link to="/">Home (गृह)</Link></li>
-            <li><Link to="/wall">Virtual Diyo Wall</Link></li>
-            <li><Link to="/games">Games of Tihar</Link></li>
-            <li><Link to="/rangoli">Rangoli Studio</Link></li>
-            <li><Link to="/chhath">Chhath Parva & Ghats</Link></li>
-            <li><Link to="/deusi-jam">Deusi-Bhailo Jam</Link></li>
-            <li><Link to="/kukur-tribute">Kukur Tribute</Link></li>
-            <li><Link to="/about-tihar">About Yamapanchak</Link></li>
-            <li><Link to="/stats">Celebration Pulse</Link></li>
-          </ul>
-        </div>
-
         {/* Community & Action */}
         <div className="footer-action-column">
-          <h4 className="footer-col-heading">Share the Joy</h4>
+          <h4 className="footer-col-heading">Celebrate With Us</h4>
           <p className="footer-light-prompt">
-            Haven't lit a diya yet? Add your prayer to our constellation of community lights.
+            Haven't lit a diya yet? Add your prayer to our constellation of community lights and connect with celebrants worldwide.
           </p>
           <button
             type="button"
             className="btn-footer-light"
             onClick={onOpenLightModal}
           >
-            <span>🪔 Light Your Diya Now</span>
+            <span>🪔 Light Your Virtual Diya Now</span>
           </button>
 
           <div className="footer-social-links">

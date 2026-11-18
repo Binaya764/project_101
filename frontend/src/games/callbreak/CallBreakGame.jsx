@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlayingCard from '../shared/PlayingCard';
 import {
   PLAYERS,
@@ -10,8 +10,7 @@ import {
   getValidMoves,
   determineTrickWinner,
   chooseAICard,
-  computeRoundScores,
-  parseCard
+  computeRoundScores
 } from './callBreakLogic';
 import { soundManager } from '../../utils/audio';
 
@@ -79,7 +78,7 @@ export default function CallBreakGame({ onClose }) {
     if (!validMoves.includes(card)) {
       setShakeCard(card);
       soundManager.playCardPlay();
-      setStatusMessage('Must follow suit or play higher card according to rules!');
+      setStatusMessage('Must follow suit or play higher card according to Call Break rules!');
       setTimeout(() => setShakeCard(null), 400);
       return;
     }
@@ -91,7 +90,6 @@ export default function CallBreakGame({ onClose }) {
   const playCardForPlayer = (player, card) => {
     soundManager.playCardPlay();
 
-    // Remove card from player hand
     setHands(prev => ({
       ...prev,
       [player]: prev[player].filter(c => c !== card)
@@ -114,22 +112,20 @@ export default function CallBreakGame({ onClose }) {
         setTrickCount(nextTrickCount);
 
         if (nextTrickCount >= 13) {
-          // Round complete
           endRound({ ...tricksWon, [winner]: tricksWon[winner] + 1 });
         } else {
           setCurrentTurn(winner);
           setStatusMessage(`${PLAYER_INFO[winner].name} leads the next trick.`);
         }
-      }, 1300);
+      }, 1200);
     } else {
-      // Advance to next player clockwise
       const currentIndex = PLAYERS.indexOf(player);
       const nextPlayer = PLAYERS[(currentIndex + 1) % 4];
       setCurrentTurn(nextPlayer);
     }
   };
 
-  // AI Turn handler with effect
+  // AI Turn handler
   useEffect(() => {
     if (phase !== 'playing' || currentTurn === 'south') return;
     if (currentTrick.length >= 4) return;
@@ -141,7 +137,7 @@ export default function CallBreakGame({ onClose }) {
       const validMoves = getValidMoves(aiHand, currentTrick);
       const chosenCard = chooseAICard(validMoves, currentTrick, aiHand);
       playCardForPlayer(currentTurn, chosenCard);
-    }, 750);
+    }, 700);
 
     return () => clearTimeout(timer);
   }, [phase, currentTurn, currentTrick, hands]);
@@ -160,7 +156,7 @@ export default function CallBreakGame({ onClose }) {
 
     if (finalTricks.south >= bids.south) {
       soundManager.playWinFanfare();
-      setStatusMessage(`Round ${roundNumber} Complete! You successfully made your bid! 🎉`);
+      setStatusMessage(`Round ${roundNumber} Complete! You made your bid! 🎉`);
     } else {
       setStatusMessage(`Round ${roundNumber} Complete. You fell short of your bid.`);
     }
@@ -181,6 +177,11 @@ export default function CallBreakGame({ onClose }) {
   const southValidMoves = phase === 'playing' && currentTurn === 'south'
     ? getValidMoves(hands.south, currentTrick)
     : [];
+
+  // Helper to find card played in trick by seat
+  const getTrickCardForSeat = (seat) => {
+    return currentTrick.find(entry => entry.player === seat);
+  };
 
   return (
     <div className="game-container callbreak-container">
@@ -208,23 +209,23 @@ export default function CallBreakGame({ onClose }) {
             🔄 Restart
           </button>
           {onClose && (
-            <button className="btn-icon btn-close" onClick={onClose} title="Close Game">
+            <button className="btn-icon btn-close" onClick={onClose} title="Back to Games">
               ✕
             </button>
           )}
         </div>
       </div>
 
-      {/* Rules Modal Overlay */}
+      {/* Rules Modal */}
       {showRules && (
         <div className="game-rules-modal">
           <div className="rules-content">
             <h4>📖 Call Break Rules</h4>
             <ul>
               <li><strong>Spades (♠) are permanent trump</strong> (Hukum).</li>
-              <li>Each player bids 1 to 8 tricks.</li>
+              <li>Each player bids 1 to 8 tricks based on hand strength.</li>
               <li>You <strong>must follow the lead suit</strong> if you have it.</li>
-              <li>If void in lead suit, you may trump with a Spade.</li>
+              <li>If you have no cards in lead suit, you can trump with a Spade.</li>
               <li>Making your bid awards: <em>bid + (extra tricks × 0.1)</em> points.</li>
               <li>Failing your bid results in <em>-bid</em> points penalty.</li>
             </ul>
@@ -237,9 +238,8 @@ export default function CallBreakGame({ onClose }) {
 
       {/* Main Playing Table */}
       <div className="card-table">
-        {/* Table Felt Center */}
-        <div className="table-felt">
-          {/* Trump & Status Banner */}
+        <div className="table-felt felt-screen-fit">
+          {/* Top Status Bar on Table */}
           <div className="felt-info-bar">
             <span className="trump-tag">♠ Hukum: Spades</span>
             <span className="trick-tracker">
@@ -250,7 +250,7 @@ export default function CallBreakGame({ onClose }) {
             </span>
           </div>
 
-          {/* North Opponent */}
+          {/* North Seat (Opponent) */}
           <div className={`player-seat seat-north ${currentTurn === 'north' ? 'active-turn' : ''}`}>
             <div className="player-badge">
               <span className="avatar">{PLAYER_INFO.north.avatar}</span>
@@ -261,117 +261,160 @@ export default function CallBreakGame({ onClose }) {
                 </span>
               </div>
             </div>
-            <div className="opponent-hand horizontal">
+            <div className="opponent-hand horizontal compact-hand">
               {hands.north.map((_, i) => (
                 <PlayingCard key={i} isFaceDown small />
               ))}
             </div>
           </div>
 
-          {/* West Opponent */}
-          <div className={`player-seat seat-west ${currentTurn === 'west' ? 'active-turn' : ''}`}>
-            <div className="player-badge">
-              <span className="avatar">{PLAYER_INFO.west.avatar}</span>
-              <div className="player-details">
-                <span className="name">{PLAYER_INFO.west.name}</span>
-                <span className="bid-info">
-                  Bid: {bids.west} | Won: {tricksWon.west}
-                </span>
+          {/* Middle Row: West, Center Trick Arena, East */}
+          <div className="table-middle-row">
+            {/* West Seat */}
+            <div className={`player-seat seat-west-inline ${currentTurn === 'west' ? 'active-turn' : ''}`}>
+              <div className="player-badge">
+                <span className="avatar">{PLAYER_INFO.west.avatar}</span>
+                <div className="player-details">
+                  <span className="name">{PLAYER_INFO.west.name}</span>
+                  <span className="bid-info">
+                    Bid: {bids.west} | Won: {tricksWon.west}
+                  </span>
+                </div>
+              </div>
+              <div className="opponent-hand vertical compact-hand">
+                {hands.west.slice(0, 5).map((_, i) => (
+                  <PlayingCard key={i} isFaceDown small />
+                ))}
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.west.slice(0, 7).map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
+
+            {/* Compass-Arranged Center Trick Zone */}
+            <div className="compass-trick-zone">
+              {/* North Played Card */}
+              <div className="compass-slot slot-north">
+                {getTrickCardForSeat('north') && (
+                  <div className="trick-entry">
+                    <PlayingCard card={getTrickCardForSeat('north').card} pop small />
+                    <span className="trick-label">Pooja</span>
+                  </div>
+                )}
+              </div>
+
+              {/* West & East Middle Row */}
+              <div className="compass-middle-row">
+                {/* West Played Card */}
+                <div className="compass-slot slot-west">
+                  {getTrickCardForSeat('west') && (
+                    <div className="trick-entry">
+                      <PlayingCard card={getTrickCardForSeat('west').card} pop small />
+                      <span className="trick-label">Kiran</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Center Diya Emblem / Status message */}
+                <div className="compass-center-hub">
+                  <span className="center-flame">🪔</span>
+                  <span className="center-trick-status">
+                    {currentTrick.length === 0 ? statusMessage : `${currentTrick.length}/4 Cards`}
+                  </span>
+                </div>
+
+                {/* East Played Card */}
+                <div className="compass-slot slot-east">
+                  {getTrickCardForSeat('east') && (
+                    <div className="trick-entry">
+                      <PlayingCard card={getTrickCardForSeat('east').card} pop small />
+                      <span className="trick-label">Ramesh</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* South Played Card */}
+              <div className="compass-slot slot-south">
+                {getTrickCardForSeat('south') && (
+                  <div className="trick-entry">
+                    <PlayingCard card={getTrickCardForSeat('south').card} pop small />
+                    <span className="trick-label">You</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* East Seat */}
+            <div className={`player-seat seat-east-inline ${currentTurn === 'east' ? 'active-turn' : ''}`}>
+              <div className="player-badge">
+                <span className="avatar">{PLAYER_INFO.east.avatar}</span>
+                <div className="player-details">
+                  <span className="name">{PLAYER_INFO.east.name}</span>
+                  <span className="bid-info">
+                    Bid: {bids.east} | Won: {tricksWon.east}
+                  </span>
+                </div>
+              </div>
+              <div className="opponent-hand vertical compact-hand">
+                {hands.east.slice(0, 5).map((_, i) => (
+                  <PlayingCard key={i} isFaceDown small />
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Center Trick Arena */}
-          <div className="trick-arena">
-            <div className="trick-center-zone">
-              {currentTrick.map(entry => (
-                <div
-                  key={entry.player}
-                  className={`trick-card-slot slot-${entry.player}`}
-                >
-                  <PlayingCard card={entry.card} pop />
-                  <span className="card-owner-tag">
-                    {PLAYER_INFO[entry.player].name.split(' ')[0]}
+          {/* South Seat (Human Player) */}
+          <div className={`player-seat seat-south-bottom ${currentTurn === 'south' ? 'active-turn' : ''}`}>
+            <div className="south-player-controls-row">
+              <div className="player-badge south-badge">
+                <span className="avatar">{PLAYER_INFO.south.avatar}</span>
+                <div className="player-details">
+                  <span className="name">{PLAYER_INFO.south.name}</span>
+                  <span className="bid-info">
+                    Bid: {bids.south || 'Pending'} | Won: {tricksWon.south} | Score: {cumulativeScores.south}
                   </span>
                 </div>
-              ))}
-              {currentTrick.length === 0 && (
-                <div className="empty-trick-hint">
-                  <span>🪔</span>
-                  <p>{statusMessage}</p>
+              </div>
+
+              {/* Bidding Buttons */}
+              {phase === 'bidding' && (
+                <div className="bidding-panel-inline">
+                  <span className="bid-call-prompt">Your Call:</span>
+                  <div className="bids-buttons">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                      <button
+                        key={num}
+                        className="bid-pill-btn"
+                        onClick={() => handleUserBid(num)}
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
-          </div>
 
-          {/* East Opponent */}
-          <div className={`player-seat seat-east ${currentTurn === 'east' ? 'active-turn' : ''}`}>
-            <div className="player-badge">
-              <span className="avatar">{PLAYER_INFO.east.avatar}</span>
-              <div className="player-details">
-                <span className="name">{PLAYER_INFO.east.name}</span>
-                <span className="bid-info">
-                  Bid: {bids.east} | Won: {tricksWon.east}
-                </span>
-              </div>
-            </div>
-            <div className="opponent-hand vertical">
-              {hands.east.slice(0, 7).map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
-          </div>
-
-          {/* South (Human Player) */}
-          <div className={`player-seat seat-south ${currentTurn === 'south' ? 'active-turn' : ''}`}>
-            <div className="player-badge south-badge">
-              <span className="avatar">{PLAYER_INFO.south.avatar}</span>
-              <div className="player-details">
-                <span className="name">{PLAYER_INFO.south.name}</span>
-                <span className="bid-info">
-                  Bid: {bids.south || 'Pending'} | Won: {tricksWon.south} | Total Score: {cumulativeScores.south}
-                </span>
-              </div>
-            </div>
-
-            {/* Bidding Controls if Bidding Phase */}
-            {phase === 'bidding' && (
-              <div className="bidding-panel">
-                <h4>Make your Call / Bid:</h4>
-                <div className="bids-buttons">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                    <button
-                      key={num}
-                      className="bid-pill-btn"
-                      onClick={() => handleUserBid(num)}
-                    >
-                      Call {num}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Player Hand */}
+            {/* Player Hand Fan */}
             {phase === 'playing' && (
-              <div className="south-hand">
-                {hands.south.map(card => {
+              <div className="south-hand-fan">
+                {hands.south.map((card, idx) => {
                   const isValid = southValidMoves.includes(card);
                   const isTurn = currentTurn === 'south';
                   return (
-                    <PlayingCard
+                    <div
                       key={card}
-                      card={card}
-                      disabled={!isTurn || !isValid}
-                      shake={shakeCard === card}
-                      onClick={() => handleCardClick(card)}
-                      className={isValid && isTurn ? 'valid-highlight' : ''}
-                    />
+                      className="fanned-card-wrapper"
+                      style={{
+                        zIndex: idx + 1
+                      }}
+                    >
+                      <PlayingCard
+                        card={card}
+                        disabled={!isTurn || !isValid}
+                        shake={shakeCard === card}
+                        onClick={() => handleCardClick(card)}
+                        className={isValid && isTurn ? 'valid-highlight' : ''}
+                      />
+                    </div>
                   );
                 })}
               </div>
@@ -380,7 +423,7 @@ export default function CallBreakGame({ onClose }) {
         </div>
 
         {/* Live Status Bar */}
-        <div className="game-status-footer">
+        <div className="game-status-footer compact-footer">
           <div className="status-announcer">
             <span className="flame-dot">🪔</span>
             <span>{statusMessage}</span>
@@ -406,8 +449,8 @@ export default function CallBreakGame({ onClose }) {
                 <span>Player</span>
                 <span>Bid</span>
                 <span>Won</span>
-                <span>Round Score</span>
-                <span>Total Score</span>
+                <span>Round Pts</span>
+                <span>Total</span>
               </div>
               {PLAYERS.map(p => {
                 const roundPts = computeRoundScores(bids, tricksWon)[p];

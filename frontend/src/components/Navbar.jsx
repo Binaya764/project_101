@@ -5,25 +5,30 @@ import { soundManager } from '../utils/audio';
 export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const { currentPath } = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 25);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', path: '/', nepali: 'गृह' },
-    { name: 'Diyo Wall', path: '/wall', nepali: 'दियो भित्तो' },
-    { name: 'Card Games', path: '/games', nepali: 'तास खेल' },
-    { name: 'Rangoli Studio', path: '/rangoli', nepali: 'रङ्गोली' },
-    { name: 'Chhath Parva', path: '/chhath', nepali: 'छठ महापर्व' },
-    { name: 'Deusi Jam', path: '/deusi-jam', nepali: 'देउसी-भैलो' },
-    { name: 'Kukur Tribute', path: '/kukur-tribute', nepali: 'कुकुर पूजा' },
-    { name: 'About Tihar', path: '/about-tihar', nepali: 'यमपञ्चक' }
+  // Primary streamlined navigation links
+  const primaryNavLinks = [
+    { name: 'Home', path: '/', icon: '🏮', nepali: 'गृह' },
+    { name: 'Diyo Wall', path: '/wall', icon: '🪔', nepali: 'दियो भित्तो' },
+    { name: 'Card Games', path: '/games', icon: '🎴', nepali: 'तास खेल' },
+    { name: 'Rangoli Studio', path: '/rangoli', icon: '🎨', nepali: 'रङ्गोली' },
+    { name: 'Chhath Parva', path: '/chhath', icon: '☀️', nepali: 'छठ महापर्व' },
+    { name: 'About Tihar', path: '/about-tihar', icon: '🏵️', nepali: 'यमपञ्चक' }
+  ];
+
+  const secondaryNavLinks = [
+    { name: 'Kukur Tribute', path: '/kukur-tribute', icon: '🐕', nepali: 'कुकुर पूजा' },
+    { name: 'Celebration Stats', path: '/stats', icon: '📊', nepali: 'तथ्यांक' }
   ];
 
   return (
@@ -39,43 +44,85 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             <div className="brand-main-row">
               <span className="brand-english">JHILIMILI</span>
               <span className="competition-track-tag" title="KUCC Tihar-Chhath Web UI Design Competition 2026">
-                KUCC Advanced Track
+                KUCC Advanced
               </span>
             </div>
             <span className="brand-nepali">झिलिमिली • तिहार र छठ महापर्व</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Clean, Easy Desktop Navigation */}
         <nav className="desktop-nav" aria-label="Main Navigation">
-          {navLinks.map((link) => (
+          {primaryNavLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
               className="nav-item-link"
-              onClick={() => soundManager.playCardPlay()}
+              onClick={() => {
+                soundManager.playCardPlay();
+                setMoreDropdownOpen(false);
+              }}
             >
               <span className="link-title">{link.name}</span>
               <span className="link-sub-nepali">{link.nepali}</span>
             </Link>
           ))}
+
+          {/* More Dropdown for secondary features */}
+          <div
+            className="nav-more-dropdown-wrapper"
+            onMouseEnter={() => setMoreDropdownOpen(true)}
+            onMouseLeave={() => setMoreDropdownOpen(false)}
+          >
+            <button
+              type="button"
+              className={`nav-item-link nav-more-trigger ${secondaryNavLinks.some(l => l.path === currentPath) ? 'is-active' : ''}`}
+              onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
+              aria-expanded={moreDropdownOpen}
+            >
+              <span className="link-title">More ▾</span>
+              <span className="link-sub-nepali">थप सुविधाहरू</span>
+            </button>
+
+            {moreDropdownOpen && (
+              <div className="nav-dropdown-menu">
+                {secondaryNavLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className="dropdown-item-link"
+                    onClick={() => {
+                      soundManager.playCardPlay();
+                      setMoreDropdownOpen(false);
+                    }}
+                  >
+                    <span className="drop-icon">{link.icon}</span>
+                    <div className="drop-texts">
+                      <span className="drop-title">{link.name}</span>
+                      <span className="drop-sub">{link.nepali}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </nav>
 
         {/* Navbar Actions */}
         <div className="navbar-actions">
-          {/* Sound Toggle Button */}
+          {/* Sound Toggle */}
           <button
             type="button"
             className={`sound-toggle-btn ${soundEnabled ? 'sound-on' : 'sound-off'}`}
             onClick={onToggleSound}
-            title={soundEnabled ? 'Mute Festival Sounds' : 'Enable Festival Sounds'}
-            aria-label={soundEnabled ? 'Mute Festival Sounds' : 'Enable Festival Sounds'}
+            title={soundEnabled ? 'Mute Festival Audio' : 'Unmute Festival Audio'}
+            aria-label={soundEnabled ? 'Mute Festival Audio' : 'Unmute Festival Audio'}
           >
             <span className="sound-icon">{soundEnabled ? '🔔' : '🔕'}</span>
             <span className="sound-label">{soundEnabled ? 'Sound ON' : 'Muted'}</span>
           </button>
 
-          {/* Primary CTA */}
+          {/* Primary Action Button */}
           <button
             type="button"
             className="btn-light-diya-nav"
@@ -120,14 +167,17 @@ export default function Navbar({ onOpenLightModal, soundEnabled, onToggleSound }
             </div>
 
             <nav className="mobile-nav-list">
-              {navLinks.map((link) => (
+              {[...primaryNavLinks, ...secondaryNavLinks].map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   className="mobile-nav-link"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <span className="link-title">{link.name}</span>
+                  <span className="mobile-nav-left">
+                    <span className="mobile-link-icon">{link.icon}</span>
+                    <span className="link-title">{link.name}</span>
+                  </span>
                   <span className="link-sub-nepali">{link.nepali}</span>
                 </Link>
               ))}

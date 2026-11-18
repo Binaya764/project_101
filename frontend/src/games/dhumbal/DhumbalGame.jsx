@@ -9,7 +9,7 @@ import {
   findBestAIDiscard,
   shouldAICallDhumbal
 } from './dhumbalLogic';
-import { createDeck, shuffle, parseCard } from '../callbreak/callBreakLogic';
+import { createDeck, shuffle } from '../callbreak/callBreakLogic';
 import { soundManager } from '../../utils/audio';
 
 export default function DhumbalGame({ onClose }) {
@@ -22,7 +22,7 @@ export default function DhumbalGame({ onClose }) {
   const [turnStep, setTurnStep] = useState('discard'); // 'discard' | 'draw'
   const [selectedCards, setSelectedCards] = useState([]);
   const [statusMessage, setStatusMessage] = useState('Select card(s) to discard or call Dhumbal if points <= 10.');
-  const [showdown, setShowdown] = useState(null); // { caller, winner, caught, pointsMap }
+  const [showdown, setShowdown] = useState(null);
   const [showRules, setShowRules] = useState(false);
 
   // Initialize a new game/round
@@ -76,10 +76,8 @@ export default function DhumbalGame({ onClose }) {
     }
 
     soundManager.playCardPlay();
-    // Remove selected from South's hand
     const remainingHand = hands.south.filter(c => !selectedCards.includes(c));
     setHands(prev => ({ ...prev, south: remainingHand }));
-    // Add to discard pile
     setDiscardPile(prev => [...selectedCards, ...prev]);
     setSelectedCards([]);
     setTurnStep('draw');
@@ -97,7 +95,6 @@ export default function DhumbalGame({ onClose }) {
 
     if (source === 'deck') {
       if (newDeck.length === 0) {
-        // reshuffle discard except top
         const recycled = shuffle(newDiscard.slice(1));
         newDeck = recycled;
         newDiscard = [newDiscard[0]];
@@ -118,7 +115,6 @@ export default function DhumbalGame({ onClose }) {
     setHands(prev => ({ ...prev, south: [...prev.south, drawnCard] }));
     setTurnStep('discard');
 
-    // Pass turn to next player
     passTurnToNext('south');
   };
 
@@ -132,7 +128,7 @@ export default function DhumbalGame({ onClose }) {
     triggerShowdown('south');
   };
 
-  // Trigger Showdown when someone calls Dhumbal
+  // Showdown
   const triggerShowdown = (caller) => {
     const pointsMap = {};
     DHUMBAL_PLAYERS.forEach(p => {
@@ -154,14 +150,12 @@ export default function DhumbalGame({ onClose }) {
 
     let roundPenalty = {};
     if (!isCaught) {
-      // Caller wins cleanly!
       DHUMBAL_PLAYERS.forEach(p => {
         roundPenalty[p] = p === caller ? 0 : pointsMap[p];
       });
       soundManager.playWinFanfare();
       setStatusMessage(`${DHUMBAL_PLAYER_INFO[caller].name} successfully called DHUMBAL! 🏆`);
     } else {
-      // Caller was caught ("फाउल")! Penalty of 20
       DHUMBAL_PLAYERS.forEach(p => {
         if (p === caller) {
           roundPenalty[p] = 20;
@@ -175,7 +169,6 @@ export default function DhumbalGame({ onClose }) {
       setStatusMessage(`${DHUMBAL_PLAYER_INFO[caller].name} was CAUGHT by ${DHUMBAL_PLAYER_INFO[minPlayer].name}! 20 Penalty points!`);
     }
 
-    // Update cumulative scores
     setScores(prev => {
       const updated = {};
       DHUMBAL_PLAYERS.forEach(p => {
@@ -193,14 +186,13 @@ export default function DhumbalGame({ onClose }) {
     });
   };
 
-  // Advance turn clockwise
   const passTurnToNext = (fromPlayer) => {
     const idx = DHUMBAL_PLAYERS.indexOf(fromPlayer);
     const nextPlayer = DHUMBAL_PLAYERS[(idx + 1) % 4];
     setCurrentTurn(nextPlayer);
   };
 
-  // AI Turn handler with lifelike pacing
+  // AI Turn Handler
   useEffect(() => {
     if (showdown || currentTurn === 'south') return;
 
@@ -208,20 +200,17 @@ export default function DhumbalGame({ onClose }) {
       const aiHand = hands[currentTurn];
       if (!aiHand || aiHand.length === 0) return;
 
-      // 1. Check if AI should call Dhumbal
       if (shouldAICallDhumbal(aiHand, round)) {
         triggerShowdown(currentTurn);
         return;
       }
 
-      // 2. Select AI discard
       const cardsToDiscard = findBestAIDiscard(aiHand);
       soundManager.playCardPlay();
 
       const remainingAIHand = aiHand.filter(c => !cardsToDiscard.includes(c));
       const newDiscardPile = [...cardsToDiscard, ...discardPile];
 
-      // 3. AI decides to draw from deck or top discard
       let newDeck = [...deck];
       let finalDiscardPile = newDiscardPile;
       let drawnCard = null;
@@ -229,7 +218,6 @@ export default function DhumbalGame({ onClose }) {
       const topDiscardCard = discardPile[0];
       const topDiscardPoints = topDiscardCard ? getCardPoints(topDiscardCard) : 99;
 
-      // Draw from discard if it's very low points (Ace or 2)
       if (topDiscardPoints <= 2 && Math.random() < 0.6) {
         drawnCard = topDiscardCard;
         finalDiscardPile = newDiscardPile.slice(1);
@@ -251,7 +239,7 @@ export default function DhumbalGame({ onClose }) {
 
       setStatusMessage(`${DHUMBAL_PLAYER_INFO[currentTurn].name} discarded ${cardsToDiscard.length} card(s) and drew a card.`);
       passTurnToNext(currentTurn);
-    }, 900);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [currentTurn, hands, deck, discardPile, showdown]);
@@ -277,7 +265,7 @@ export default function DhumbalGame({ onClose }) {
             🔄 Restart
           </button>
           {onClose && (
-            <button className="btn-icon btn-close" onClick={onClose}>
+            <button className="btn-icon btn-close" onClick={onClose} title="Back to Games">
               ✕
             </button>
           )}
@@ -290,7 +278,7 @@ export default function DhumbalGame({ onClose }) {
           <div className="rules-content">
             <h4>📖 Dhumbal / Jhyap Rules</h4>
             <ul>
-              <li><strong>Objective:</strong> Lower your hand's total point value.</li>
+              <li><strong>Objective:</strong> Lower your hand's total card point value.</li>
               <li>A = 1 pt, 2-10 = face value, J = 11, Q = 12, K = 13.</li>
               <li>Discard 1 card, matching pairs/triplets, or same-suit sequences (3+ cards).</li>
               <li>Draw 1 card from the Draw pile or the Discard pile.</li>
@@ -304,9 +292,9 @@ export default function DhumbalGame({ onClose }) {
         </div>
       )}
 
-      {/* Main Table */}
+      {/* Screen-Fit Table */}
       <div className="card-table dhumbal-table">
-        <div className="table-felt">
+        <div className="table-felt felt-screen-fit">
           {/* North Opponent (Puja) */}
           <div className={`player-seat seat-north ${currentTurn === 'north' ? 'active-turn' : ''}`}>
             <div className="player-badge">
@@ -316,76 +304,79 @@ export default function DhumbalGame({ onClose }) {
                 <span className="bid-info">Penalties: {scores.north} pts</span>
               </div>
             </div>
-            <div className="opponent-hand horizontal">
+            <div className="opponent-hand horizontal compact-hand">
               {hands.north.map((_, i) => (
                 <PlayingCard key={i} isFaceDown small />
               ))}
             </div>
           </div>
 
-          {/* West Opponent (Bikash) */}
-          <div className={`player-seat seat-west ${currentTurn === 'west' ? 'active-turn' : ''}`}>
-            <div className="player-badge">
-              <span className="avatar">{DHUMBAL_PLAYER_INFO.west.avatar}</span>
-              <div className="player-details">
-                <span className="name">{DHUMBAL_PLAYER_INFO.west.name}</span>
-                <span className="bid-info">Penalties: {scores.west} pts</span>
+          {/* Middle Row: West, Center Piles, East */}
+          <div className="table-middle-row">
+            {/* West Opponent (Bikash) */}
+            <div className={`player-seat seat-west-inline ${currentTurn === 'west' ? 'active-turn' : ''}`}>
+              <div className="player-badge">
+                <span className="avatar">{DHUMBAL_PLAYER_INFO.west.avatar}</span>
+                <div className="player-details">
+                  <span className="name">{DHUMBAL_PLAYER_INFO.west.name}</span>
+                  <span className="bid-info">Penalties: {scores.west} pts</span>
+                </div>
               </div>
-            </div>
-            <div className="opponent-hand vertical">
-              {hands.west.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
-            </div>
-          </div>
-
-          {/* Center Table: Draw Pile & Discard Pile */}
-          <div className="dhumbal-center-piles">
-            {/* Draw Pile */}
-            <div className="pile-container draw-pile">
-              <span className="pile-label">Draw Pile ({deck.length})</span>
-              <div
-                className={`card-deck-stack ${currentTurn === 'south' && turnStep === 'draw' ? 'clickable-pile' : ''}`}
-                onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('deck')}
-              >
-                <PlayingCard isFaceDown />
+              <div className="opponent-hand vertical compact-hand">
+                {hands.west.map((_, i) => (
+                  <PlayingCard key={i} isFaceDown small />
+                ))}
               </div>
             </div>
 
-            {/* Discard Pile */}
-            <div className="pile-container discard-pile">
-              <span className="pile-label">Discard Pile</span>
-              <div
-                className={`discard-top-card ${currentTurn === 'south' && turnStep === 'draw' ? 'clickable-pile' : ''}`}
-                onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('discard')}
-              >
-                {discardPile.length > 0 ? (
-                  <PlayingCard card={discardPile[0]} pop />
-                ) : (
-                  <div className="empty-pile">Empty</div>
-                )}
+            {/* Center Table: Draw Pile & Discard Pile */}
+            <div className="dhumbal-center-piles">
+              {/* Draw Pile */}
+              <div className="pile-container draw-pile">
+                <span className="pile-label">Draw Pile ({deck.length})</span>
+                <div
+                  className={`card-deck-stack ${currentTurn === 'south' && turnStep === 'draw' ? 'clickable-pile' : ''}`}
+                  onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('deck')}
+                >
+                  <PlayingCard isFaceDown small />
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* East Opponent (Rohan) */}
-          <div className={`player-seat seat-east ${currentTurn === 'east' ? 'active-turn' : ''}`}>
-            <div className="player-badge">
-              <span className="avatar">{DHUMBAL_PLAYER_INFO.east.avatar}</span>
-              <div className="player-details">
-                <span className="name">{DHUMBAL_PLAYER_INFO.east.name}</span>
-                <span className="bid-info">Penalties: {scores.east} pts</span>
+              {/* Discard Pile */}
+              <div className="pile-container discard-pile">
+                <span className="pile-label">Discard Pile</span>
+                <div
+                  className={`discard-top-card ${currentTurn === 'south' && turnStep === 'draw' ? 'clickable-pile' : ''}`}
+                  onClick={() => currentTurn === 'south' && turnStep === 'draw' && handleUserDraw('discard')}
+                >
+                  {discardPile.length > 0 ? (
+                    <PlayingCard card={discardPile[0]} pop small />
+                  ) : (
+                    <div className="empty-pile">Empty</div>
+                  )}
+                </div>
               </div>
             </div>
-            <div className="opponent-hand vertical">
-              {hands.east.map((_, i) => (
-                <PlayingCard key={i} isFaceDown small />
-              ))}
+
+            {/* East Opponent (Rohan) */}
+            <div className={`player-seat seat-east-inline ${currentTurn === 'east' ? 'active-turn' : ''}`}>
+              <div className="player-badge">
+                <span className="avatar">{DHUMBAL_PLAYER_INFO.east.avatar}</span>
+                <div className="player-details">
+                  <span className="name">{DHUMBAL_PLAYER_INFO.east.name}</span>
+                  <span className="bid-info">Penalties: {scores.east} pts</span>
+                </div>
+              </div>
+              <div className="opponent-hand vertical compact-hand">
+                {hands.east.map((_, i) => (
+                  <PlayingCard key={i} isFaceDown small />
+                ))}
+              </div>
             </div>
           </div>
 
           {/* South Player (Human) */}
-          <div className={`player-seat seat-south ${currentTurn === 'south' ? 'active-turn' : ''}`}>
+          <div className={`player-seat seat-south-bottom ${currentTurn === 'south' ? 'active-turn' : ''}`}>
             <div className="south-dashboard">
               <div className="player-badge south-badge">
                 <span className="avatar">{DHUMBAL_PLAYER_INFO.south.avatar}</span>
@@ -407,7 +398,7 @@ export default function DhumbalGame({ onClose }) {
                         disabled={selectedCards.length === 0 || !isValidSelection}
                         onClick={handleUserDiscard}
                       >
-                        Discard Selected ({selectedCards.length})
+                        Discard ({selectedCards.length})
                       </button>
 
                       {southPoints <= 10 && (
@@ -423,15 +414,15 @@ export default function DhumbalGame({ onClose }) {
 
                   {turnStep === 'draw' && (
                     <div className="draw-hint-pill">
-                      Click the <strong>Draw Pile</strong> or <strong>Discard Pile</strong> above to draw 1 card.
+                      Click the <strong>Draw Pile</strong> or <strong>Discard Pile</strong> above to take a card.
                     </div>
                   )}
                 </div>
               )}
             </div>
 
-            {/* South's Cards */}
-            <div className="south-hand">
+            {/* South's 5 Cards */}
+            <div className="south-hand-dhumbal">
               {hands.south.map(card => {
                 const isSelected = selectedCards.includes(card);
                 return (
@@ -449,7 +440,7 @@ export default function DhumbalGame({ onClose }) {
         </div>
 
         {/* Status Bar */}
-        <div className="game-status-footer">
+        <div className="game-status-footer compact-footer">
           <div className="status-announcer">
             <span className="flame-dot">🪔</span>
             <span>{statusMessage}</span>
@@ -477,8 +468,8 @@ export default function DhumbalGame({ onClose }) {
             </h3>
             <p className="showdown-sub">
               {showdown.caught
-                ? `${DHUMBAL_PLAYER_INFO[showdown.caller].name} called Dhumbal with ${showdown.pointsMap[showdown.caller]} pts, but ${DHUMBAL_PLAYER_INFO[showdown.winner].name} had ${showdown.pointsMap[showdown.winner]} pts!`
-                : `${DHUMBAL_PLAYER_INFO[showdown.caller].name} called with lowest points (${showdown.pointsMap[showdown.caller]} pts)!`}
+                ? `${DHUMBAL_PLAYER_INFO[showdown.caller].name} called with ${showdown.pointsMap[showdown.caller]} pts, but caught with 20 penalty pts!`
+                : `${DHUMBAL_PLAYER_INFO[showdown.caller].name} won with lowest points (${showdown.pointsMap[showdown.caller]} pts)!`}
             </p>
 
             <div className="showdown-hands-grid">
