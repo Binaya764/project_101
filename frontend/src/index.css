@@ -4369,51 +4369,173 @@ button {
   line-height: 1.6;
 }
 
-/* Cultural Symbols Grid */
-.subheading-symbols {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  color: var(--cream);
-  text-align: center;
-  margin-bottom: 24px;
+/* ==========================================================================
+   Cultural Symbols Grid — Auspicious Emblems of Tihar
+   ========================================================================== */
+.cultural-symbols-section {
+  margin-top: 56px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 211, 106, 0.15);
+}
+
+.symbols-header-block {
+  margin-bottom: 36px;
 }
 
 .symbols-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 24px;
 }
 
 .symbol-item-card {
-  background: rgba(27, 16, 34, 0.7);
-  border: 1px solid var(--border-gold);
-  border-radius: 18px;
-  padding: 20px;
+  position: relative;
+  min-height: 380px;
+  border-radius: 22px;
+  border: 1.5px solid rgba(255, 211, 106, 0.22);
+  overflow: hidden;
+  background-color: #12091c;
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.3, 0.64, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.symbol-item-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: var(--diya-gold);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.78),
+    0 0 30px rgba(255, 211, 106, 0.28);
+}
+
+/* Full bleed image with smooth zoom on card hover */
+.symbol-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.7) contrast(1.1);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
+  z-index: 0;
+}
+
+.symbol-item-card:hover .symbol-bg-img {
+  transform: scale(1.08);
+  filter: brightness(0.8) contrast(1.15);
+}
+
+/* Multi-stop gradient overlay ensuring 100% typography contrast */
+.symbol-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 5, 16, 0.22) 0%,
+    rgba(10, 5, 16, 0.4) 30%,
+    rgba(10, 5, 16, 0.85) 68%,
+    rgba(10, 5, 16, 0.98) 100%
+  );
+  transition: background 0.4s ease;
+  pointer-events: none;
+}
+
+.symbol-item-card:hover .symbol-card-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 5, 16, 0.12) 0%,
+    rgba(10, 5, 16, 0.3) 25%,
+    rgba(10, 5, 16, 0.8) 64%,
+    rgba(10, 5, 16, 0.97) 100%
+  );
+}
+
+/* Top floating glassmorphic badge */
+.symbol-top-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(18, 9, 28, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 211, 106, 0.35);
+  border-radius: 99px;
+  padding: 5px 14px;
+  width: fit-content;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.symbol-item-card:hover .symbol-top-badge {
+  border-color: var(--diya-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 211, 106, 0.25);
+}
+
+.symbol-badge-icon {
+  font-size: 14px;
+}
+
+.symbol-badge-text {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Bottom text content */
+.symbol-bottom-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .symbol-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  margin: 0;
 }
 
-.symbol-header h4 {
-  font-size: 16px;
+.symbol-name {
+  font-family: var(--font-serif, 'Cormorant Garamond', serif);
+  font-size: 22px;
+  font-weight: 700;
   color: var(--diya-gold);
+  margin: 0 0 2px 0;
+  line-height: 1.25;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
 }
 
 .symbol-title-en {
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--warm-amber);
+  text-transform: uppercase;
+  letter-spacing: 1px;
   display: block;
   margin-bottom: 8px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .symbol-desc {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.5;
+  font-size: 13.5px;
+  color: var(--cream-soft);
+  line-height: 1.6;
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 /* ==========================================================================
@@ -4668,6 +4790,13 @@ button {
   .bidding-top {
     flex-direction: column;
     align-items: center;
+  }
+  .symbols-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .symbol-item-card {
+    min-height: 330px;
   }
 }
 
