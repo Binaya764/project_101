@@ -5,7 +5,7 @@
 
 ---
 
-## 📌 Project Abstract (For Competition Google Form Submission)
+## 📌 Project Abstract
 
 > **JHILIMILI (झिलिमिली)** is an immersive, multi-page interactive Web Application celebrating Nepal’s twin festivals of **Tihar (Deepawali/Yamapanchak)** and **Chhath Puja (छठ महापर्व)**. Featuring dedicated URL routes, it includes an interactive **Virtual Diyo Wall** with global diaspora wishes, three fully playable **Traditional Nepali Card Games** (Call Break, Dhumbal/Jhyap, and Marriage) on dedicated table routes, a real-time radial symmetry **Rangoli & Mandala Studio**, a sacred **Chhath Ghat Locator with Virtual Arghya Offerings**, an interactive **Madal Drum & Deusi-Bhailo Jam Corner**, and a **Kukur Tihar Tribute Gallery**—all backed by a custom Web Audio synthesizer and resilient Node/Express API.
 
