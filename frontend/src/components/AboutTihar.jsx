@@ -136,16 +136,50 @@ export default function AboutTihar() {
 
       {/* Cultural Symbols Grid */}
       <div className="cultural-symbols-section">
-        <h3 className="subheading-symbols">Auspicious Symbols of Tihar</h3>
+        <div className="section-header-centered symbols-header-block">
+          <div className="festive-pill-badge">
+            <span>🏵️</span>
+            <span>मङ्गलमय प्रतीकहरू • Sacred Emblems</span>
+          </div>
+
+          <h3 className="section-title">
+            Auspicious Symbols of <span className="gradient-gold-text">Tihar</span>
+          </h3>
+
+          <p className="section-subtitle">
+            From the golden solar aura of marigolds to sacred floor mandalas, every emblem woven into Tihar holds timeless spiritual reverence, warmth, and cosmic blessings.
+          </p>
+        </div>
+
         <div className="symbols-cards-grid">
           {TIHAR_SYMBOLS.map((sym) => (
-            <div key={sym.name} className="symbol-item-card">
-              <div className="symbol-header">
-                <span className="symbol-dot">🏵️</span>
-                <h4>{sym.name}</h4>
+            <div
+              key={sym.name}
+              className="symbol-item-card"
+            >
+              {/* Full-bleed background image with smooth hover scale */}
+              <img
+                src={sym.image}
+                alt={sym.title}
+                className="symbol-bg-img"
+                loading="lazy"
+              />
+
+              {/* Rich multi-stop gradient overlay */}
+              <div className="symbol-card-overlay">
+                <div className="symbol-top-badge">
+                  <span className="symbol-badge-icon">{sym.icon || '🏵️'}</span>
+                  <span className="symbol-badge-text">{sym.title}</span>
+                </div>
+
+                <div className="symbol-bottom-content">
+                  <div className="symbol-header">
+                    <h4 className="symbol-name">{sym.name}</h4>
+                  </div>
+                  <span className="symbol-title-en">{sym.title}</span>
+                  <p className="symbol-desc">{sym.desc}</p>
+                </div>
               </div>
-              <span className="symbol-title-en">{sym.title}</span>
-              <p className="symbol-desc">{sym.desc}</p>
             </div>
           ))}
         </div>

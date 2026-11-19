@@ -99,31 +99,43 @@ export const TIHAR_SYMBOLS = [
   {
     name: "Sayapatri (सयपत्री)",
     title: "Marigold Flowers",
+    icon: "🌼",
+    image: "/images/marigold.jpg",
     desc: "Golden-orange marigolds represent the solar aura, warmth, and vitality. Their pungent aroma deters insects while decorating every doorway and garland."
   },
   {
     name: "Makhamali (मखमली)",
     title: "Globe Amaranth",
+    icon: "🌸",
+    image: "/images/makamali.jpg",
     desc: "A hardy purple flower that retains its vibrant color even when dried. Placed on Bhai Tika as a prayer that the brother's life and health will never fade."
   },
   {
     name: "Sel Roti (सेल रोटी)",
     title: "Traditional Rice Donut",
+    icon: "🥯",
+    image: "/images/selroti.png",
     desc: "Crispy yet soft circular bread made from soaked rice flour, ghee, sugar, and cardamom, deep-fried to golden perfection in bubbling oil."
   },
   {
     name: "Diyo (दियो)",
     title: "Earthen Oil Lamp",
+    icon: "🪔",
+    image: "/images/diyo.jpg",
     desc: "Terracotta clay lamps filled with pure mustard oil and hand-rolled cotton wicks. They symbolize dispelling inner darkness and welcoming cosmic grace."
   },
   {
     name: "Rangoli / Mandala (रङ्गोली)",
     title: "Sacred Floor Art",
+    icon: "🏵️",
+    image: "/images/rangoli.jpg",
     desc: "Geometric floral designs crafted at doorways with colored powders, rice flour, and flower petals to invite Goddess Laxmi's auspicious footsteps."
   },
   {
     name: "Deusi-Bhailo (देउसी-भैलो)",
     title: "Folk Caroling",
+    icon: "🪘",
+    image: "/images/deusi-bhailo.png",
     desc: "Centuries-old musical tradition where neighborly groups sing rhythmic folk couplets, dance, and bless homes with good harvest and happiness."
   }
 ];
