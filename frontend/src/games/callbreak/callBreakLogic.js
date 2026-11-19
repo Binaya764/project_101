@@ -16,9 +16,9 @@ export const PLAYERS = ['south', 'east', 'north', 'west'];
 
 export const PLAYER_INFO = {
   south: { name: 'You (तपाईं)', avatar: '🪔', isAI: false },
-  east: { name: 'Ramesh Dai', avatar: '🧔', isAI: true },
-  north: { name: 'Pooja Didi', avatar: '👩', isAI: true },
-  west: { name: 'Kiran Kaji', avatar: '👨‍💼', isAI: true }
+  east:  { name: 'Ramesh Dai', avatar: '🧔🏽', isAI: true, nepali: 'रमेश दाइ' },
+  north: { name: 'Pooja Didi', avatar: '👩🏽', isAI: true, nepali: 'पूजा दिदी' },
+  west:  { name: 'Kiran Kaji', avatar: '👨🏽', isAI: true, nepali: 'किरण काजी' }
 };
 
 // Create a full 52-card deck

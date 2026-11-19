@@ -71,7 +71,7 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       <section className="portal-gateway-section">
         <div className="section-header-centered">
           <div className="festive-pill-badge">
-            <span>🌟</span>
+            <span></span>
             <span>महोत्सव अनुभव • Choose Your Festival Journey</span>
           </div>
           <h2 className="section-title">

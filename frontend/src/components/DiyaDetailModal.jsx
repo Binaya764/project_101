@@ -34,7 +34,7 @@ export default function DiyaDetailModal({ diya, onClose, onLike, isLiked }) {
       >
         {/* Top Garland */}
         <div className="modal-top-garland">
-          <span>🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼</span>
+          
           <button type="button" className="btn-modal-close" onClick={onClose}>
             ✕
           </button>

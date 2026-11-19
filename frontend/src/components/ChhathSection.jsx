@@ -6,6 +6,7 @@ export const CHHATH_DAYS = [
     day: 1,
     name: "Nahay-Khay (नहाय-खाय)",
     date: "Day 1",
+    image: "/images/chhath.png",
     tagline: "Sacred Holy Dip & Pure Sattvic Meal",
     description: "Devotees (Vratis) take a purifying bath in holy rivers or ponds, cleanse their homes thoroughly, and prepare a single sattvic meal of bottle gourd (kaddu-bhat) cooked in pure ghee with rock salt. It signifies physical and spiritual purification before commencing the intense fast.",
     rituals: ["Purifying river dip at dawn", "Preparation of Kaddu-Bhat (pumpkin & rice)", "Pledge of pure speech and clean mind"]
@@ -14,6 +15,7 @@ export const CHHATH_DAYS = [
     day: 2,
     name: "Kharna (खरना)",
     date: "Day 2",
+    image: "/images/chhath1.png",
     tagline: "Nirjala Fast & Jaggery Kheer Offering",
     description: "The day-long waterless fast commences. In the evening, after sunset, devotees offer sacred Rasiyao-Kheer (rice pudding sweetened with sugarcane jaggery) and hot Rotis to Goddess Chhathi and the Sun God. Family and neighbors gather to receive this holy prasad before the 36-hour unbroken fast begins.",
     rituals: ["Day-long nirjala (waterless) fasting", "Cooking Kheer with cow milk & new jaggery", "Distribution of auspicious Kharna prasad"]
@@ -22,6 +24,7 @@ export const CHHATH_DAYS = [
     day: 3,
     name: "Sandhya Arghya (सन्ध्या अर्घ्य)",
     date: "Day 3 - Dusk",
+    image: "/images/chhath2.png",
     tagline: "Evening Arghya to the Setting Sun God",
     description: "The entire city flocks to beautifully decorated riverbanks and ponds (Ghats). Wading into waist-deep water with bamboo trays (Soop and Daura) overflowing with Thekua, fruits, sugarcane, and lit diyos, devotees offer Arghya to the setting sun (Pratyaksha Surya) in gratitude for life and vitality.",
     rituals: ["Carrying bamboo Daura on heads to the Ghat", "Standing waist-deep in water at dusk", "Offering Arghya with milk, holy water, and hymns"]
@@ -30,6 +33,7 @@ export const CHHATH_DAYS = [
     day: 4,
     name: "Usha Arghya / Paran (उषा अर्घ्य)",
     date: "Day 4 - Dawn",
+    image: "/images/chhath3.png",
     tagline: "Morning Arghya to the Rising Sun & Paran",
     description: "Before dawn breaks, devotees return to the Ghats waiting for the first golden rays of Lord Surya. As the sun rises over the water, the final Arghya is offered, prayers for the longevity of family and children are answered, and the 36-hour fast is joyously broken (Paran) with fresh ginger and Thekua prasad.",
     rituals: ["Welcoming the first ray of the rising Sun", "Final Arghya offering with conch shells", "Breaking the 36-hour fast with ginger and Thekua"]
@@ -87,16 +91,7 @@ export const CHHATH_GHATS = [
     vibe: "Sprawling white sands by the sacred Gandaki tributary",
     highlight: "Sunrise reflecting directly over the broad Himalayan snow river currents."
   },
-  {
-    id: "diaspora",
-    name: "Global Diaspora Sacred Waters",
-    nepali: "विश्वभरका नेपाली छठ संगम",
-    location: "Sydney, Dallas, London, Toronto, Dubai",
-    timing: "Local Twilight Timings",
-    capacity: "Infinite Virtual Devotees",
-    vibe: "Connecting Nepalis around the world with home",
-    highlight: "Virtual Arghya prayers offered in unison with motherland ghats."
-  }
+  
 ];
 
 export default function ChhathSection() {
@@ -148,7 +143,7 @@ export default function ChhathSection() {
       {/* Section Header */}
       <div className="section-header-centered">
         <div className="festive-pill-badge chhath-badge">
-          <span>☀️</span>
+          
           <span>छठ महापर्व • Sun Worship & Ghat Locator</span>
         </div>
 
@@ -176,6 +171,14 @@ export default function ChhathSection() {
             }}
           >
             <span className="chhath-day-badge">{d.date}</span>
+            {d.image ? (
+              <img
+                src={d.image}
+                alt={d.nameEn}
+                className="day-symbol-img my-1.5 h-12 w-12 rounded-full object-cover border-2 border-amber-400/50 shadow-md"
+              />
+            ) : (
+              <span className ="chhath-symbol-emoji">{d.symbol}</span>)}
             <span className="chhath-day-name">{d.name}</span>
             <span className="chhath-day-tag">{d.tagline}</span>
           </button>
@@ -183,14 +186,23 @@ export default function ChhathSection() {
       </div>
 
       {/* Day Editorial Spotlight */}
-      <div className="chhath-editorial-card">
+      <div className="chhath-editorial-card relative overflow-hidden bg-cover bg-center transition-all duration-500"
+        style={
+          currentDay.image
+            ? {
+                backgroundImage: `linear-gradient(to right, rgba(18, 14, 28, 0.92), rgba(18, 14, 28, 0.78)), url(${currentDay.image})`,
+                backgroundSize: "100% 100%, cover",
+                backgroundPosition: "center, center 30%",
+                backgroundRepeat: "no-repeat, no-repeat",
+              }
+            : undefined}>
         <div className="editorial-content">
           <div className="chhath-editorial-header">
             <div>
               <h3>{currentDay.name}</h3>
               <span className="editorial-subtitle">{currentDay.tagline}</span>
             </div>
-            <span className="sun-emblem">☀️</span>
+            <span className="sun-emblem"></span>
           </div>
 
           <p className="editorial-desc">{currentDay.description}</p>
@@ -210,7 +222,7 @@ export default function ChhathSection() {
       <div className="ghat-locator-container">
         <div className="locator-header">
           <div className="locator-title-row">
-            <span className="pin-icon">📍</span>
+            <span className="pin-icon"></span>
             <div>
               <h3>Sacred Chhath Ghat Locator</h3>
               <p>Explore major ghats across Nepal & diaspora with live prayer timings and river coordinates.</p>
@@ -249,7 +261,7 @@ export default function ChhathSection() {
                 <span className="banner-badge">Featured Sacred Ghat</span>
                 <h4>{selectedGhat.name}</h4>
                 <span className="banner-nepali">{selectedGhat.nepali}</span>
-                <span className="banner-loc">📍 {selectedGhat.location}</span>
+                <span className="banner-loc"> {selectedGhat.location}</span>
               </div>
             </div>
 
@@ -267,7 +279,7 @@ export default function ChhathSection() {
 
               <p className="ghat-vibe-quote">"{selectedGhat.vibe}"</p>
               <div className="ghat-highlight-box">
-                <span>🪷 <strong>Atmosphere:</strong> {selectedGhat.highlight}</span>
+                <span><strong>Atmosphere:</strong> {selectedGhat.highlight}</span>
               </div>
             </div>
           </div>

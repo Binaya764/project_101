@@ -66,7 +66,7 @@ export default function Footer({ onOpenLightModal }) {
       <div className="footer-bottom-bar">
         <div className="footer-bottom-container">
           <p className="footer-credit">
-            Made with ❤️ for the spirit of Tihar & Chhath • KUCC Advanced Track.
+            Made with ❤️ for the spirit of Tihar & Chhath
           </p>
           <p className="footer-copyright">
             © {new Date().getFullYear()} JHILIMILI Platform. All blessings, stories, and cultural traditions warmly celebrated.

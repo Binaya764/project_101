@@ -1,37 +1,40 @@
 import React from 'react';
 
-// Maps suit symbols to clean SVG or unicode representations
 const SUIT_DATA = {
-  '♠': { name: 'Spades', color: '#1E1B26', symbol: '♠', isRed: false },
-  '♥': { name: 'Hearts', color: '#DC2626', symbol: '♥', isRed: true },
-  '♦': { name: 'Diamonds', color: '#EA580C', symbol: '♦', isRed: true },
-  '♣': { name: 'Clubs', color: '#1E1B26', symbol: '♣', isRed: false },
-  'S': { name: 'Spades', color: '#1E1B26', symbol: '♠', isRed: false },
-  'H': { name: 'Hearts', color: '#DC2626', symbol: '♥', isRed: true },
-  'D': { name: 'Diamonds', color: '#EA580C', symbol: '♦', isRed: true },
-  'C': { name: 'Clubs', color: '#1E1B26', symbol: '♣', isRed: false }
+  '♠': { name: 'Spades',   color: '#1E1B26', symbol: '♠', isRed: false, isTrump: true  },
+  '♥': { name: 'Hearts',   color: '#DC2626', symbol: '♥', isRed: true,  isTrump: false },
+  '♦': { name: 'Diamonds', color: '#EA580C', symbol: '♦', isRed: true,  isTrump: false },
+  '♣': { name: 'Clubs',    color: '#1E1B26', symbol: '♣', isRed: false, isTrump: false },
+  'S': { name: 'Spades',   color: '#1E1B26', symbol: '♠', isRed: false, isTrump: true  },
+  'H': { name: 'Hearts',   color: '#DC2626', symbol: '♥', isRed: true,  isTrump: false },
+  'D': { name: 'Diamonds', color: '#EA580C', symbol: '♦', isRed: true,  isTrump: false },
+  'C': { name: 'Clubs',    color: '#1E1B26', symbol: '♣', isRed: false, isTrump: false }
 };
+
+// Court card decorative emblems
+const COURT_EMBLEMS = { J: '⚔️', Q: '🌸', K: '👑' };
 
 export default function PlayingCard({
   card,
   onClick,
-  selected = false,
-  disabled = false,
-  shake = false,
-  pop = false,
+  selected   = false,
+  disabled   = false,
+  shake      = false,
+  pop        = false,
   isFaceDown = false,
-  small = false,
-  className = ''
+  small      = false,
+  className  = ''
 }) {
+  // ── Face-down card back ──
   if (isFaceDown) {
     return (
-      <div
-        className={`playing-card face-down ${small ? 'small' : ''} ${className}`}
-        aria-label="Face down card"
-      >
+      <div className={`playing-card face-down ${small ? 'card-small' : ''} ${className}`} aria-label="Face down card">
         <div className="card-back-pattern">
-          <div className="mandala-ring">
-            <span>🪔</span>
+          <div className="cb-back-border">
+            <div className="cb-back-mandala">
+              <span className="cb-mandala-diya">🪔</span>
+              <div className="cb-mandala-ring" />
+            </div>
           </div>
         </div>
       </div>
@@ -40,44 +43,58 @@ export default function PlayingCard({
 
   if (!card) return null;
 
-  // Normalize card string, e.g. "10♠", "A♥", "K♠" or object { rank, suit }
   let rank = '';
   let rawSuit = '';
 
   if (typeof card === 'object') {
-    rank = card.rank;
+    rank    = card.rank;
     rawSuit = card.suit;
   } else {
     rawSuit = card.slice(-1);
-    rank = card.slice(0, -1);
+    rank    = card.slice(0, -1);
   }
 
-  const suitInfo = SUIT_DATA[rawSuit] || { name: 'Spades', color: '#1E1B26', symbol: rawSuit, isRed: false };
-  const isRed = suitInfo.isRed;
+  const suitInfo  = SUIT_DATA[rawSuit] || { name: 'Spades', color: '#1E1B26', symbol: rawSuit, isRed: false, isTrump: false };
+  const isRed     = suitInfo.isRed;
+  const isTrump   = suitInfo.isTrump;
+  const isCourt   = ['J', 'Q', 'K'].includes(rank);
+  const isAce     = rank === 'A';
 
   const cardClasses = [
     'playing-card',
-    isRed ? 'card-red' : 'card-black',
-    selected ? 'card-selected' : '',
-    disabled ? 'card-disabled' : '',
-    shake ? 'card-shake' : '',
-    pop ? 'card-pop' : '',
-    small ? 'card-small' : '',
+    isRed   ? 'card-red'   : 'card-black',
+    isTrump ? 'card-trump' : '',
+    selected   ? 'card-selected'  : '',
+    disabled   ? 'card-disabled'  : '',
+    shake      ? 'card-shake'     : '',
+    pop        ? 'card-pop'       : '',
+    small      ? 'card-small'     : '',
     onClick && !disabled ? 'card-clickable' : '',
     className
   ].filter(Boolean).join(' ');
 
   const content = (
     <>
+      {/* Trump glow band at top for spades */}
+      {isTrump && !small && (
+        <div className="trump-glow-band" aria-hidden="true" />
+      )}
+
       <div className="card-corner top-left">
         <span className="card-rank">{rank}</span>
         <span className="card-suit-symbol">{suitInfo.symbol}</span>
       </div>
 
       <div className="card-center">
-        <span className="center-suit-symbol">{suitInfo.symbol}</span>
-        {['J', 'Q', 'K'].includes(rank) && (
-          <span className="court-badge">{rank}</span>
+        {isAce ? (
+          <span className="ace-center-symbol">{suitInfo.symbol}</span>
+        ) : isCourt ? (
+          <div className="court-center">
+            <span className="court-emblem">{COURT_EMBLEMS[rank]}</span>
+            <span className="court-suit">{suitInfo.symbol}</span>
+          </div>
+        ) : (
+          <span className="center-suit-symbol">{suitInfo.symbol}</span>
         )}
       </div>
 
@@ -94,7 +111,7 @@ export default function PlayingCard({
         type="button"
         className={cardClasses}
         onClick={() => onClick(card)}
-        aria-label={`${rank} of ${suitInfo.name}`}
+        aria-label={`${rank} of ${suitInfo.name}${isTrump ? ' (Trump)' : ''}`}
       >
         {content}
       </button>
