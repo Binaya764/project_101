@@ -90,7 +90,7 @@ export default function DiyaModal({ onClose, onSubmit }) {
       >
         {/* Decorative Top Garland */}
         <div className="modal-top-garland">
-          <span>🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼🏵️🌼</span>
+          
           <button
             type="button"
             className="btn-modal-close"

@@ -105,17 +105,7 @@ export default function Hero({ totalDiyosCount, onOpenLightModal, onExploreWall 
             <div className="diya-ambient-halo" />
             <div className="diya-light-beam" />
 
-            {/* Marigold Garland Ring around Diya Base */}
-            <div className="marigold-ring" aria-hidden="true">
-              <span className="flower f-1">🌼</span>
-              <span className="flower f-2">🏵️</span>
-              <span className="flower f-3">🌼</span>
-              <span className="flower f-4">🏵️</span>
-              <span className="flower f-5">🌼</span>
-              <span className="flower f-6">🏵️</span>
-              <span className="flower f-7">🌼</span>
-              <span className="flower f-8">🏵️</span>
-            </div>
+           
 
             {/* SVG Illustration of Majestic Nepali Diya */}
             <svg

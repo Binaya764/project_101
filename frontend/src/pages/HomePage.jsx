@@ -49,7 +49,7 @@ export default function HomePage({ totalCount, onOpenLightModal, diyos, onSelect
       title: "Celebration Pulse",
       nepali: "महोत्सव तथ्यांक",
       url: "/stats",
-      image: "/images/diya.png",
+      image: "/images/chhath1.png",
       badge: "Global Reach",
       desc: "Interactive global analytics showing participants across 64+ nations and regional diaspora distribution.",
       actionText: "View Analytics →"
