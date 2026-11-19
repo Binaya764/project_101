@@ -37,27 +37,6 @@ function TrickBanner({ winner, playerInfo, onDone }) {
   );
 }
 
-// === Hand strength indicator for bidding phase ===
-function HandStrengthMeter({ hand }) {
-  const spades = hand.filter(c => parseCard(c).suit === '♠').length;
-  const aces  = hand.filter(c => parseCard(c).rank === 'A').length;
-  const kings = hand.filter(c => parseCard(c).rank === 'K').length;
-  const strength = Math.min(100, spades * 8 + aces * 10 + kings * 6);
-  const label = strength >= 70 ? 'Strong 💪' : strength >= 40 ? 'Average ⚖️' : 'Weak 🌱';
-  return (
-    <div className="hand-strength-meter">
-      <span className="strength-label">Hand: {label}</span>
-      <div className="strength-bar-track">
-        <div className="strength-bar-fill" style={{ width: `${strength}%` }} />
-      </div>
-      <div className="strength-hints">
-        <span>♠ Spades: {spades}</span>
-        <span>Aces: {aces}</span>
-        <span>Kings: {kings}</span>
-      </div>
-    </div>
-  );
-}
 
 // === Scoreboard live strip ===
 function ScoreStrip({ players, playerInfo, cumulativeScores, tricksWon, bids, trickCount }) {
@@ -101,9 +80,6 @@ export default function CallBreakGame({ onClose }) {
   const [bidHovered, setBidHovered] = useState(null);
   const tricksWonRef = useRef(tricksWon);
   useEffect(() => { tricksWonRef.current = tricksWon; }, [tricksWon]);
-
-  // Suggested bid based on hand
-  const suggestedBid = hands.south.length > 0 ? calculateAIBid(hands.south) : null;
 
   const startNewRound = useCallback((roundNum) => {
     const deck = shuffle(createDeck());
@@ -426,30 +402,21 @@ export default function CallBreakGame({ onClose }) {
               <div className="bidding-panel">
                 <div className="bidding-top">
                   <h4>🪔 Make Your Call — कति ट्रिक जित्ने?</h4>
-                  <HandStrengthMeter hand={hands.south} />
+                  <span className="bidding-subtitle-hint">Review your hand below and choose your bid (1–8):</span>
                 </div>
                 <div className="bids-buttons">
                   {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
                     <button
                       key={num}
-                      className={`bid-pill-btn ${bidHovered === num ? 'hovered' : ''} ${num === suggestedBid ? 'suggested' : ''}`}
+                      className={`bid-pill-btn ${bidHovered === num ? 'hovered' : ''}`}
                       onMouseEnter={() => setBidHovered(num)}
                       onMouseLeave={() => setBidHovered(null)}
                       onClick={() => handleUserBid(num)}
                     >
                       <span className="bid-num">{num}</span>
-                      {num === suggestedBid && <span className="bid-suggested-tag">★ Suggested</span>}
                     </button>
                   ))}
                 </div>
-                {bidHovered && (
-                  <p className="bid-hover-hint">
-                    {bidHovered <= 2 ? '🌱 Conservative — safe but low reward' :
-                     bidHovered <= 4 ? '⚖️ Balanced — good risk/reward' :
-                     bidHovered <= 6 ? '🔥 Aggressive — high reward, high risk' :
-                     '💀 Very ambitious — only if you have many spades + aces!'}
-                  </p>
-                )}
               </div>
             )}
 
@@ -469,24 +436,25 @@ export default function CallBreakGame({ onClose }) {
               </div>
             )}
 
-            {/* Player Hand */}
-            {phase === 'playing' && (
-              <div className="south-hand">
+            {/* Player Hand (shown during bidding AND playing) */}
+            {(phase === 'playing' || phase === 'bidding') && (
+              <div className={`south-hand ${phase === 'bidding' ? 'south-hand-bidding-preview' : ''}`}>
                 {hands.south.map(card => {
-                  const isValid = southValidMoves.includes(card);
-                  const isTurn = currentTurn === 'south';
+                  const isValid = phase === 'playing' ? southValidMoves.includes(card) : true;
+                  const isTurn = phase === 'playing' && currentTurn === 'south';
                   const { suit } = parseCard(card);
                   const isSpade = suit === '♠';
                   return (
                     <PlayingCard
                       key={card}
                       card={card}
-                      disabled={!isTurn || !isValid}
+                      disabled={phase === 'bidding' ? false : (!isTurn || !isValid)}
                       shake={shakeCard === card}
-                      onClick={() => handleCardClick(card)}
+                      onClick={phase === 'playing' ? () => handleCardClick(card) : undefined}
                       className={[
                         isValid && isTurn ? 'valid-highlight' : '',
                         isSpade ? 'is-spade' : '',
+                        phase === 'bidding' ? 'bidding-preview-card' : ''
                       ].filter(Boolean).join(' ')}
                     />
                   );

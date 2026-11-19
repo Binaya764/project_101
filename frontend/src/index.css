@@ -2439,65 +2439,52 @@ button {
   background: linear-gradient(145deg, rgba(22, 10, 32, 0.96) 0%, rgba(12, 5, 18, 0.98) 100%);
   border: 2px solid var(--border-gold);
   border-radius: 20px;
-  padding: 16px 20px;
+  padding: 12px 18px;
   margin-bottom: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   animation: slideUp 0.3s ease;
+  width: 100%;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .bidding-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  gap: 16px;
+  margin-bottom: 10px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .bidding-top h4 {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 16px;
   color: var(--diya-gold);
   margin: 0;
 }
 
-/* Hand strength meter */
-.hand-strength-meter {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 4px 12px;
-  border-radius: 99px;
-  border: 1px solid rgba(255, 211, 106, 0.2);
+.bidding-subtitle-hint {
   font-size: 12px;
-}
-
-.strength-label {
-  font-weight: 700;
-  color: var(--cream);
-}
-
-.strength-bar-track {
-  width: 70px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.strength-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #F59E0B, #10B981);
-  border-radius: 3px;
-  transition: width 0.4s ease;
-}
-
-.strength-hints {
-  display: flex;
-  gap: 8px;
-  font-size: 11px;
   color: var(--cream-soft);
+  opacity: 0.85;
+}
+
+/* South hand card preview during bidding */
+.south-hand.south-hand-bidding-preview {
+  margin-top: 4px;
+  padding-bottom: 4px;
+}
+
+.south-hand-bidding-preview .playing-card.bidding-preview-card {
+  cursor: default;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.south-hand-bidding-preview .playing-card.bidding-preview-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  z-index: 25;
 }
 
 .bids-buttons {
