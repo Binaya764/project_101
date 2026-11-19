@@ -138,7 +138,7 @@ export default function AboutTihar() {
       <div className="cultural-symbols-section">
         <div className="section-header-centered symbols-header-block">
           <div className="festive-pill-badge">
-            <span>🏵️</span>
+            
             <span>मङ्गलमय प्रतीकहरू • Sacred Emblems</span>
           </div>
 
@@ -168,7 +168,7 @@ export default function AboutTihar() {
               {/* Rich multi-stop gradient overlay */}
               <div className="symbol-card-overlay">
                 <div className="symbol-top-badge">
-                  <span className="symbol-badge-icon">{sym.icon || '🏵️'}</span>
+                  
                   <span className="symbol-badge-text">{sym.title}</span>
                 </div>
 

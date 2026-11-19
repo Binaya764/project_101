@@ -174,11 +174,12 @@ export default function ChhathSection() {
             {d.image ? (
               <img
                 src={d.image}
-                alt={d.nameEn}
+                alt={d.name}
                 className="day-symbol-img my-1.5 h-12 w-12 rounded-full object-cover border-2 border-amber-400/50 shadow-md"
               />
             ) : (
-              <span className ="chhath-symbol-emoji">{d.symbol}</span>)}
+              <span className="chhath-symbol-emoji">{d.symbol}</span>
+            )}
             <span className="chhath-day-name">{d.name}</span>
             <span className="chhath-day-tag">{d.tagline}</span>
           </button>
@@ -186,34 +187,69 @@ export default function ChhathSection() {
       </div>
 
       {/* Day Editorial Spotlight */}
-      <div className="chhath-editorial-card relative overflow-hidden bg-cover bg-center transition-all duration-500"
-        style={
-          currentDay.image
-            ? {
-                backgroundImage: `linear-gradient(to right, rgba(18, 14, 28, 0.92), rgba(18, 14, 28, 0.78)), url(${currentDay.image})`,
-                backgroundSize: "100% 100%, cover",
-                backgroundPosition: "center, center 30%",
-                backgroundRepeat: "no-repeat, no-repeat",
-              }
-            : undefined}>
-        <div className="editorial-content">
-          <div className="chhath-editorial-header">
-            <div>
-              <h3>{currentDay.name}</h3>
-              <span className="editorial-subtitle">{currentDay.tagline}</span>
+      <div className="chhath-editorial-card">
+        {/* Full-bleed background artwork with smooth transition */}
+        {currentDay.image && (
+          <img
+            key={currentDay.image}
+            src={currentDay.image}
+            alt={currentDay.name}
+            className="chhath-editorial-bg-img"
+          />
+        )}
+
+        {/* Ambient solar light sweep */}
+        <div className="chhath-solar-glow" aria-hidden="true" />
+
+        {/* Directional gradient overlay */}
+        <div className="chhath-editorial-overlay">
+          <div className="chhath-editorial-grid">
+            {/* Left Column: Narrative & Rituals */}
+            <div className="chhath-editorial-narrative">
+              <div className="chhath-day-indicator">
+                <span className="chhath-day-pill"> Day {currentDay.day} of 4 • {currentDay.date}</span>
+                <span className="chhath-phase-pill">महाव्रत</span>
+              </div>
+
+              <div className="chhath-editorial-header">
+                <h3 className="chhath-day-title">{currentDay.name}</h3>
+                <p className="editorial-subtitle">"{currentDay.tagline}"</p>
+              </div>
+
+              <p className="editorial-desc">{currentDay.description}</p>
+
+              <div className="chhath-rituals-card">
+                <h4>✨ Sacred Highlights & Rituals:</h4>
+                <ul className="chhath-rituals-bullets">
+                  {currentDay.rituals.map((r, i) => (
+                    <li key={i}>
+                      <span className="ritual-bullet">✦</span>
+                      <span>{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <span className="sun-emblem"></span>
-          </div>
 
-          <p className="editorial-desc">{currentDay.description}</p>
-
-          <div className="chhath-rituals-list">
-            <h4>✨ Sacred Highlights of {currentDay.name}:</h4>
-            <ul>
-              {currentDay.rituals.map((r, i) => (
-                <li key={i}>{r}</li>
-              ))}
-            </ul>
+            {/* Right Column: Visual Showcase Panel */}
+            <div className="chhath-editorial-visual">
+              <div className="chhath-visual-frame">
+                {currentDay.image && (
+                  <img
+                    src={currentDay.image}
+                    alt={currentDay.name}
+                    className="chhath-visual-thumb"
+                  />
+                )}
+                <div className="sun-emblem-badge">
+                  
+                </div>
+              </div>
+              <div className="chhath-visual-caption">
+                <span className="caption-tag">सूर्य उपासना • Sun Worship</span>
+                <span className="caption-sub">{currentDay.name}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
