@@ -1636,7 +1636,7 @@ button {
 }
 
 .game-art-banner {
-  height: 170px;
+  height: 195px;
   position: relative;
   display: flex;
   align-items: center;
@@ -1644,18 +1644,67 @@ button {
   overflow: hidden;
 }
 
+/* Artistic Game Canvas Container */
+.artistic-game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.artistic-game-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.game-showcase-card:hover .artistic-game-svg {
+  transform: scale(1.06);
+}
+
+.artistic-banner-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  transition: opacity 0.4s ease;
+}
+
+.game-showcase-card:hover .artistic-banner-glow {
+  opacity: 0.9;
+}
+
+.glow-callbreak {
+  background: radial-gradient(circle at 50% 65%, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+}
+
+.glow-dhumbal {
+  background: radial-gradient(circle at 50% 65%, rgba(239, 68, 68, 0.25) 0%, transparent 70%);
+}
+
+.glow-marriage {
+  background: radial-gradient(circle at 50% 65%, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+}
+
 .art-callbreak {
-  background: radial-gradient(circle at 50% 60%, #16533A 0%, #0D3324 70%, #071E15 100%);
+  background: #03120C;
   border-bottom: 3px solid var(--wood-rim-gold);
 }
 
 .art-dhumbal {
-  background: radial-gradient(circle at 50% 60%, #5B132C 0%, #350A19 70%, #1A040C 100%);
-  border-bottom: 3px solid var(--warm-amber);
+  background: #120108;
+  border-bottom: 3px solid #F59E0B;
 }
 
 .art-marriage {
-  background: radial-gradient(circle at 50% 60%, #3B1B54 0%, #200D30 70%, #100619 100%);
+  background: #0A0210;
   border-bottom: 3px solid var(--diya-gold);
 }
 
@@ -1667,6 +1716,7 @@ button {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+  z-index: 5;
 }
 
 .badge-popularity {
